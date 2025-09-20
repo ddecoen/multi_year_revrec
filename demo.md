@@ -1,267 +1,236 @@
-# ASC 606 License + PCS Revenue Recognition Calculator - Demo Examples
+# ASC 606 Term-Based Software + Support Revenue Recognition Calculator - Demo Examples
 
 ## Overview
 
-This calculator implements the classic ASC 606 software revenue recognition scenario:
-- **Software License**: One-time perpetual license (point in time recognition)
-- **Post-Contract Support (PCS)**: Ongoing support services (over time recognition)
+This calculator handles **term-based software licenses** (like Coder) versus traditional **perpetual software licenses**, with proper ASC 606 revenue recognition methodology.
 
-Based on the **relative standalone selling price (SSP)** allocation method as required by ASC 606.
+### Key Distinction for Coder's Business Model
 
-## ASC 606 Example Implementation
+**Coder sells term-based on-premises software** - this is fundamentally different from perpetual licenses and affects revenue recognition timing:
 
-This calculator is based on the standard ASC 606 guidance example:
+- **Term-Based License**: Customer has right to use software for contract term only
+- **Revenue Recognition**: Both license and support recognized over time (ratably)
+- **Business Rationale**: Customer benefits from software throughout the contract term
 
-### Example Contract
-- **License SSP**: $8,000 (one-time cost)
-- **PCS SSP**: $1,000 per year for 5 years = $5,000 total
-- **Total SSP**: $13,000
-- **Actual Contract Price**: $12,000
+## Term-Based vs Perpetual License Comparison
 
-### SSP Allocation Calculation
-- **License**: ($8,000 ÷ $13,000) × $12,000 = **$7,385** (56.77%)
-- **PCS**: ($5,000 ÷ $13,000) × $12,000 = **$4,615** (38.46%)
+### Term-Based Software (Like Coder)
 
-### Revenue Recognition
-- **License**: $7,385 recognized at point in time (when transferred)
-- **PCS**: $4,615 recognized over 5 years ($923/year, $77/month)
+**Characteristics:**
+- Customer licensed to use software for specific contract term (1-3 years typically)
+- Software expires at end of term unless renewed
+- Customer benefits throughout the contract period
+- Both license and support are ongoing services
 
-## ASC 606 Five-Step Framework
+**ASC 606 Treatment:**
+- **Performance Obligations**: (1) Term License - over time, (2) Support - over time
+- **Revenue Recognition**: Both recognized ratably over contract term
+- **Pattern**: Even revenue recognition each year
+- **Rationale**: Customer simultaneously receives and consumes benefits
 
-### Step 1: Identify the Contract
-- Software license and support agreement
-- Clear pricing and terms
-- Enforceable rights and obligations
-- Commercial substance exists
-- Collection is probable
+### Perpetual Software (Traditional)
 
-### Step 2: Identify Performance Obligations
+**Characteristics:**
+- Customer receives indefinite right to use software
+- License doesn't expire (though support might)
+- Customer gains control at point of delivery
+- License and support are distinct obligations
 
-**Two Distinct Performance Obligations:**
-
-1. **Software License**
-   - Customer can benefit from software on its own
-   - License is distinct from support services
-   - Right to use software (not SaaS/hosted)
-   - Recognized at point in time
-
-2. **Post-Contract Support (PCS)**
-   - Ongoing technical support, updates, patches
-   - Distinct service that customer benefits from
-   - Stand-ready obligation over contract term
-   - Recognized over time (ratably)
-
-### Step 3: Determine Transaction Price
-- Fixed contract amount
-- No variable consideration in basic example
-- No significant financing component
-- No non-cash consideration
-
-### Step 4: Allocate Transaction Price
-
-**Relative SSP Method:**
-1. Determine SSP for each performance obligation
-2. Calculate relative proportions
-3. Allocate contract price proportionally
-
-**SSP Determination Hierarchy:**
-1. **Observable prices** (when sold separately)
-2. **Adjusted market assessment** (competitor analysis)
-3. **Expected cost plus margin** (cost-based approach)
-4. **Residual approach** (only when highly variable/uncertain)
-
-### Step 5: Recognize Revenue
-- **License**: When customer obtains control (point in time)
-- **PCS**: As services are provided (over time, ratably)
+**ASC 606 Treatment:**
+- **Performance Obligations**: (1) Perpetual License - point in time, (2) Support - over time
+- **Revenue Recognition**: License immediately, support over time
+- **Pattern**: Front-loaded revenue in Year 1
+- **Rationale**: Customer controls the license asset immediately
 
 ## Example Scenarios
 
-### Example 1: Standard License + PCS (Default)
+### Example 1: Coder Term-Based License (Default)
 
 **Contract Details:**
-- License SSP: $8,000
-- PCS Annual SSP: $1,000
-- Contract Term: 5 years
+- Annual License SSP: $2,000
+- Annual Support SSP: $1,000
+- Contract Term: 3 years
 - Contract Price: $12,000
 
-**Revenue Schedule:**
+**SSP Calculation:**
+- License SSP: $2,000 × 3 = $6,000
+- Support SSP: $1,000 × 3 = $3,000
+- Total SSP: $9,000
 
-| Year | License | PCS | Total | Cumulative |
-|------|---------|-----|-------|------------|
-| 1 | $7,385 | $923 | $8,308 | $8,308 |
-| 2 | $0 | $923 | $923 | $9,231 |
-| 3 | $0 | $923 | $923 | $10,154 |
-| 4 | $0 | $923 | $923 | $11,077 |
-| 5 | $0 | $923 | $923 | $12,000 |
+**Allocation:**
+- License: ($6,000 ÷ $9,000) × $12,000 = **$8,000** (66.67%)
+- Support: ($3,000 ÷ $9,000) × $12,000 = **$4,000** (33.33%)
 
-### Example 2: Premium License + Extended Support
+**Revenue Recognition (Term-Based):**
+
+| Year | License | Support | Total | Cumulative |
+|------|---------|---------|-------|------------|
+| 1 | $2,667 | $1,333 | $4,000 | $4,000 |
+| 2 | $2,667 | $1,333 | $4,000 | $8,000 |
+| 3 | $2,666 | $1,334 | $4,000 | $12,000 |
+
+**Monthly Recognition:**
+- License: $222/month
+- Support: $111/month
+- **Total: $333/month**
+
+### Example 2: Same Contract, Perpetual License
+
+**Same SSP and Allocation as above, but different recognition pattern:**
+
+**Revenue Recognition (Perpetual):**
+
+| Year | License | Support | Total | Cumulative |
+|------|---------|---------|-------|------------|
+| 1 | $8,000 | $1,333 | $9,333 | $9,333 |
+| 2 | $0 | $1,333 | $1,333 | $10,666 |
+| 3 | $0 | $1,334 | $1,334 | $12,000 |
+
+### Example 3: Enterprise Term-Based Contract
 
 **Contract Details:**
-- License SSP: $15,000
-- PCS Annual SSP: $2,000
-- Contract Term: 3 years
-- Contract Price: $18,000
+- Annual License SSP: $5,000
+- Annual Support SSP: $2,000
+- Contract Term: 2 years
+- Contract Price: $13,000
 
 **SSP Calculation:**
-- Total SSP: $15,000 + ($2,000 × 3) = $21,000
-- License Allocation: ($15,000 ÷ $21,000) × $18,000 = $12,857
-- PCS Allocation: ($6,000 ÷ $21,000) × $18,000 = $5,143
+- License SSP: $5,000 × 2 = $10,000
+- Support SSP: $2,000 × 2 = $4,000
+- Total SSP: $14,000
 
-**Revenue Schedule:**
+**Allocation:**
+- License: ($10,000 ÷ $14,000) × $13,000 = **$9,286** (71.43%)
+- Support: ($4,000 ÷ $14,000) × $13,000 = **$3,714** (28.57%)
 
-| Year | License | PCS | Total | Cumulative |
-|------|---------|-----|-------|------------|
-| 1 | $12,857 | $1,714 | $14,571 | $14,571 |
-| 2 | $0 | $1,714 | $1,714 | $16,285 |
-| 3 | $0 | $1,715 | $1,715 | $18,000 |
+**Revenue Recognition (Term-Based):**
 
-### Example 3: Discounted Bundle
+| Year | License | Support | Total | Cumulative |
+|------|---------|---------|-------|------------|
+| 1 | $4,643 | $1,857 | $6,500 | $6,500 |
+| 2 | $4,643 | $1,857 | $6,500 | $13,000 |
 
-**Contract Details:**
-- License SSP: $10,000
-- PCS Annual SSP: $1,500
-- Contract Term: 4 years
-- Contract Price: $14,000 (discounted from $16,000 SSP)
+## ASC 606 Compliance for Term-Based Licenses
 
-**SSP Calculation:**
-- Total SSP: $10,000 + ($1,500 × 4) = $16,000
-- License Allocation: ($10,000 ÷ $16,000) × $14,000 = $8,750
-- PCS Allocation: ($6,000 ÷ $16,000) × $14,000 = $5,250
+### Step 1: Identify the Contract
+- Term-based software license + support agreement
+- Fixed term with clear start/end dates
+- Enforceable rights and obligations
+- Commercial substance and probable collection
 
-**Revenue Schedule:**
+### Step 2: Identify Performance Obligations
 
-| Year | License | PCS | Total | Cumulative |
-|------|---------|-----|-------|------------|
-| 1 | $8,750 | $1,313 | $10,063 | $10,063 |
-| 2-4 | $0 | $1,312 | $1,312 | +$1,312/year |
+**Term-Based License Analysis:**
+- ✅ **Distinct**: Customer can benefit from license independently
+- ✅ **Separable**: License is separately identifiable from support
+- ✅ **Over Time**: Customer benefits throughout the term
+- ❌ **Not Point in Time**: Customer doesn't gain perpetual control
 
-## Key ASC 606 Considerations
+**Support Services Analysis:**
+- ✅ **Distinct**: Customer benefits from support independently
+- ✅ **Over Time**: Customer receives and consumes benefits as provided
+- ✅ **Stand-Ready**: Ongoing obligation throughout term
 
-### License vs. SaaS Distinction
+### Step 3: Determine Transaction Price
+- Fixed contract amount (no variable consideration in basic case)
+- Consider payment terms and financing components
+- Evaluate for material rights or options
 
-**Software License (ASC 606):**
-- ✅ Customer has right to use software
-- ✅ Software resides on customer premises
-- ✅ Customer controls the software
-- ✅ Point in time recognition
+### Step 4: Allocate Transaction Price
+- Use relative SSP method
+- Annual SSPs × contract term = total SSPs
+- Allocate proportionally based on relative SSPs
 
-**SaaS/Hosted (ASC 606):**
-- ❌ Customer accesses but doesn't control software
-- ❌ Software resides on vendor premises
-- ❌ Over time recognition (subscription model)
+### Step 5: Recognize Revenue
 
-### PCS Revenue Recognition
-
-**Stand-Ready Obligation:**
+**Term-Based License (Over Time Recognition):**
 - Customer simultaneously receives and consumes benefits
-- Services provided on as-needed basis
-- Even distribution over contract term is appropriate
-- Monthly recognition = Annual PCS ÷ 12
+- No alternative use to vendor (customer-specific rights)
+- Enforceable right to payment for performance to date
+- **Recognition Pattern**: Straight-line over contract term
 
-**Time-Based Recognition:**
-- Straight-line method typically appropriate
-- Unless pattern of transfer differs significantly
-- Consider actual usage patterns for complex arrangements
+**Support Services (Over Time Recognition):**
+- Stand-ready performance obligation
+- Customer receives benefits as services are provided
+- **Recognition Pattern**: Straight-line over contract term
 
-### SSP Determination Best Practices
+## Impact on Financial Statements
 
-**Observable SSP (Preferred):**
-- Recent standalone sales of similar licenses
-- Published rate cards for support services
-- Consistent pricing across similar customers
-- Renewal rates for existing PCS customers
+### Term-Based Model (Coder's Approach)
+**Benefits:**
+- Smoother, more predictable revenue recognition
+- Better matches revenue with service delivery period
+- Aligns with subscription-style business models
+- Reduces revenue volatility
 
-**Estimation Methods:**
+**Considerations:**
+- Lower initial revenue recognition vs perpetual
+- Requires careful contract term tracking
+- May impact revenue growth metrics
 
-1. **Market Assessment:**
-   - Competitor pricing analysis
-   - Industry benchmark studies
-   - Customer willingness-to-pay surveys
+### Perpetual Model (Traditional)
+**Benefits:**
+- Higher upfront revenue recognition
+- Immediate value recognition for delivered licenses
+- Traditional software industry pattern
 
-2. **Cost Plus Margin:**
-   - Direct costs + reasonable profit margin
-   - Consider development, delivery, support costs
-   - Ensure margin reflects business model
+**Considerations:**
+- More volatile revenue patterns
+- Front-loads revenue recognition
+- May not reflect ongoing value delivery
 
-3. **Residual Approach:**
-   - Use only when SSP highly variable/uncertain
-   - Typically applied to license component
-   - Must meet strict ASC 606 criteria
+## Industry Context
+
+### Software-as-a-Service (SaaS)
+- Typically recognized over time (subscription model)
+- Customer accesses but doesn't control software
+- Similar pattern to term-based licenses
+
+### Traditional On-Premises Software
+- Historically perpetual licenses (point in time)
+- Support/maintenance recognized over time
+- Front-loaded revenue recognition
+
+### Modern On-Premises (Like Coder)
+- Term-based licensing becoming more common
+- Better aligns with customer value realization
+- Provides more predictable revenue streams
+
+## Best Practices for Term-Based Software
+
+### Contract Documentation
+1. **Clear Term Definition**: Specify exact start/end dates
+2. **Usage Rights**: Define scope of license during term
+3. **Support Obligations**: Detail included support services
+4. **Renewal Terms**: Clarify renewal vs. new contract treatment
+
+### SSP Determination
+1. **Market Analysis**: Research competitive term-based pricing
+2. **Historical Data**: Use actual renewal rates and pricing
+3. **Component Pricing**: Separate license from support pricing
+4. **Regular Updates**: Refresh SSP analysis annually
+
+### Revenue Recognition Process
+1. **Monthly Recognition**: Calculate monthly amounts for smooth reporting
+2. **Term Tracking**: Monitor contract start/end dates carefully
+3. **Modification Handling**: Process contract changes appropriately
+4. **System Integration**: Automate calculations where possible
 
 ## Technical Implementation
 
 ### Calculator Features
+- **License Type Toggle**: Switch between term-based and perpetual
+- **Real-Time SSP**: Dynamic calculation of total SSPs
+- **Visual Formulas**: See exact allocation methodology
+- **Comparative Analysis**: Side-by-side term vs perpetual examples
+- **Monthly Breakdowns**: Support financial planning needs
 
-**Real-Time SSP Calculation:**
-- Dynamic total PCS SSP based on term length
-- Automatic percentage allocation updates
-- Live formula display showing calculations
-- Instant validation and error checking
-
-**ASC 606 Compliance:**
-- Five-step framework validation
-- Relative SSP allocation method
-- Proper timing recognition (point vs. over time)
-- Professional audit documentation
-
-**Professional Reporting:**
-- Annual revenue schedule table
-- Monthly PCS recognition amounts
-- Cumulative revenue tracking
-- Compliance summary checklist
-
-### Browser Compatibility
-- Modern browsers with ES6+ support
-- Responsive mobile design
-- No external dependencies
-- Client-side processing only
-
-### Data Security
-- No data transmission or storage
-- All calculations performed locally
-- Privacy-first architecture
-- HTTPS deployment recommended
-
-## Industry Applications
-
-### Enterprise Software
-- ERP, CRM, specialized business applications
-- Typical license:PCS ratio 60-80%:20-40%
-- Multi-year PCS terms (1-5 years common)
-- Premium support tiers with different SSPs
-
-### Development Tools
-- IDEs, development platforms, APIs
-- Higher license percentage (70-90%)
-- Lower support percentage (10-30%)
-- Often annual renewal cycles
-
-### Vertical Solutions
-- Industry-specific software (healthcare, financial)
-- Complex implementation services may create 3rd obligation
-- Regulatory compliance features affect SSP
-- Long-term customer relationships important
-
-## Audit and Compliance
-
-### Documentation Requirements
-1. **SSP Analysis**: Supporting evidence for price determination
-2. **Performance Obligations**: Clear identification and distinctness
-3. **Revenue Recognition**: Timing and measurement support
-4. **Internal Controls**: Process documentation and review
-
-### Common Issues
-1. **Insufficient SSP Evidence**: Need robust market analysis
-2. **Bundled vs. Distinct**: Proper performance obligation identification
-3. **Timing Errors**: Point in time vs. over time determination
-4. **Allocation Mistakes**: Mathematical errors in relative SSP method
-
-### Best Practices
-1. **Regular SSP Updates**: Market conditions change pricing
-2. **Consistent Application**: Same methodology across contracts
-3. **Documentation**: Maintain supporting evidence files
-4. **System Controls**: Automated calculations where possible
+### Integration Options
+- Standalone web application
+- API for system integration
+- Export capabilities for financial systems
+- Audit trail documentation
 
 ---
 
-**Professional Note:** This calculator implements standard ASC 606 methodology for software license + support arrangements. For complex contracts, multiple performance obligations, or significant financing components, consult qualified accounting professionals.
+**For Coder Teams:** This calculator is specifically designed to handle term-based software licensing scenarios. The default settings reflect typical Coder contract structures, but all parameters are adjustable for different deal sizes and terms.

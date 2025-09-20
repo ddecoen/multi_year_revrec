@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASC 606 License + PCS Revenue Recognition Calculator</title>
+    <title>ASC 606 Term-Based Software + Support Revenue Calculator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>ASC 606 License + PCS Revenue Recognition Calculator</h1>
-            <p>Calculate revenue allocation for Software License + Post-Contract Support based on Standalone Selling Prices</p>
+            <h1>ASC 606 Term-Based Software + Support Revenue Calculator</h1>
+            <p>Calculate revenue allocation for Term-Based Software License + Support Services based on Standalone Selling Prices</p>
         </header>
 
         <main>
@@ -20,12 +20,34 @@
                     <div class="form-group">
                         <label for="totalContractPrice">Total Contract Price ($)</label>
                         <input type="number" id="totalContractPrice" step="0.01" value="12000" required>
-                        <small>This is the total contract value paid by the customer</small>
+                        <small>Total amount customer pays for term-based license + support</small>
                     </div>
                     <div class="form-group">
-                        <label for="contractTerm">PCS Term (Years)</label>
-                        <input type="number" id="contractTerm" min="1" max="10" value="5" required>
-                        <small>Duration of post-contract support services</small>
+                        <label for="contractTerm">Contract Term (Years)</label>
+                        <input type="number" id="contractTerm" min="1" max="10" value="3" required>
+                        <small>Duration of both software license and support services</small>
+                    </div>
+                </section>
+
+                <section class="license-type-section">
+                    <h2>Software License Type</h2>
+                    <div class="license-type-selection">
+                        <div class="license-option">
+                            <input type="radio" id="termLicense" name="licenseType" value="term" checked>
+                            <label for="termLicense">
+                                <strong>Term-Based License</strong>
+                                <span>Customer has right to use software for contract term only (like Coder)</span>
+                                <small>Revenue recognized over time (ratably over contract term)</small>
+                            </label>
+                        </div>
+                        <div class="license-option">
+                            <input type="radio" id="perpetualLicense" name="licenseType" value="perpetual">
+                            <label for="perpetualLicense">
+                                <strong>Perpetual License</strong>
+                                <span>Customer has indefinite right to use software</span>
+                                <small>Revenue recognized at point in time (when license transferred)</small>
+                            </label>
+                        </div>
                     </div>
                 </section>
 
@@ -35,21 +57,24 @@
                         <div class="ssp-card license-ssp">
                             <h3>🔑 Software License</h3>
                             <div class="form-group">
-                                <label for="licenseSSP">License SSP ($)</label>
-                                <input type="number" id="licenseSSP" step="0.01" value="8000" required>
-                                <small>One-time cost for perpetual software license</small>
+                                <label for="licenseAnnualSSP">Annual License SSP ($)</label>
+                                <input type="number" id="licenseAnnualSSP" step="0.01" value="2000" required>
+                                <small>Annual cost for software license when sold separately</small>
+                            </div>
+                            <div class="ssp-calculation">
+                                <span>Total License SSP (<span id="licenseYears">3</span> years): <strong id="totalLicenseSSP">$6,000</strong></span>
                             </div>
                         </div>
                         
-                        <div class="ssp-card pcs-ssp">
-                            <h3>🛠️ Post-Contract Support (PCS)</h3>
+                        <div class="ssp-card support-ssp">
+                            <h3>🛠️ Support Services</h3>
                             <div class="form-group">
-                                <label for="pcsAnnualSSP">Annual PCS SSP ($)</label>
-                                <input type="number" id="pcsAnnualSSP" step="0.01" value="1000" required>
+                                <label for="supportAnnualSSP">Annual Support SSP ($)</label>
+                                <input type="number" id="supportAnnualSSP" step="0.01" value="1000" required>
                                 <small>Annual cost for support services when sold separately</small>
                             </div>
                             <div class="ssp-calculation">
-                                <span>Total PCS SSP (<span id="pcsYears">5</span> years): <strong id="totalPcsSSP">$5,000</strong></span>
+                                <span>Total Support SSP (<span id="supportYears">3</span> years): <strong id="totalSupportSSP">$3,000</strong></span>
                             </div>
                         </div>
                     </div>
@@ -57,16 +82,16 @@
                     <div class="ssp-summary">
                         <div class="ssp-breakdown">
                             <div class="ssp-item">
-                                <span>License SSP:</span>
-                                <span id="displayLicenseSSP">$8,000</span>
+                                <span>License SSP (<span id="displayLicenseYears">3</span> years):</span>
+                                <span id="displayTotalLicenseSSP">$6,000</span>
                             </div>
                             <div class="ssp-item">
-                                <span>PCS SSP (<span id="displayPcsYears">5</span> years):</span>
-                                <span id="displayTotalPcsSSP">$5,000</span>
+                                <span>Support SSP (<span id="displaySupportYears">3</span> years):</span>
+                                <span id="displayTotalSupportSSP">$3,000</span>
                             </div>
                             <div class="ssp-item total">
                                 <span><strong>Total SSP:</strong></span>
-                                <span id="totalSSP"><strong>$13,000</strong></span>
+                                <span id="totalSSP"><strong>$9,000</strong></span>
                             </div>
                         </div>
                         <button type="button" id="calculateAllocation" class="secondary-btn">Calculate Revenue Allocation</button>
@@ -77,48 +102,59 @@
                     <h2>Step 2: Performance Obligations & Allocation</h2>
                     
                     <div class="obligation-card license-card">
-                        <h3>🔑 Software License</h3>
+                        <h3>🔑 Term-Based Software License</h3>
                         <div class="allocation-details">
                             <div class="allocation-formula">
-                                <span class="formula">($<span id="calcLicenseSSP">8,000</span> SSP ÷ $<span id="calcTotalSSP1">13,000</span> Total SSP) × $<span id="calcContractPrice1">12,000</span> =</span>
+                                <span class="formula">($<span id="calcLicenseSSP">6,000</span> SSP ÷ $<span id="calcTotalSSP1">9,000</span> Total SSP) × $<span id="calcContractPrice1">12,000</span> =</span>
                             </div>
                             <div class="allocation-result">
-                                <span class="allocation-amount" id="licenseAmount">$7,385</span>
-                                <span class="allocation-percent" id="licensePercent">(56.77%)</span>
+                                <span class="allocation-amount" id="licenseAmount">$8,000</span>
+                                <span class="allocation-percent" id="licensePercent">(66.67%)</span>
                             </div>
                         </div>
                         <div class="recognition-info">
-                            <span class="recognition-timing">Recognition: Point in Time (when license is transferred)</span>
+                            <span class="recognition-timing" id="licenseRecognitionTiming">Recognition: Over Time (ratably over contract term)</span>
                         </div>
                     </div>
                     
-                    <div class="obligation-card pcs-card">
-                        <h3>🛠️ Post-Contract Support</h3>
+                    <div class="obligation-card support-card">
+                        <h3>🛠️ Support Services</h3>
                         <div class="allocation-details">
                             <div class="allocation-formula">
-                                <span class="formula">($<span id="calcPcsSSP">5,000</span> SSP ÷ $<span id="calcTotalSSP2">13,000</span> Total SSP) × $<span id="calcContractPrice2">12,000</span> =</span>
+                                <span class="formula">($<span id="calcSupportSSP">3,000</span> SSP ÷ $<span id="calcTotalSSP2">9,000</span> Total SSP) × $<span id="calcContractPrice2">12,000</span> =</span>
                             </div>
                             <div class="allocation-result">
-                                <span class="allocation-amount" id="pcsAmount">$4,615</span>
-                                <span class="allocation-percent" id="pcsPercent">(38.46%)</span>
+                                <span class="allocation-amount" id="supportAmount">$4,000</span>
+                                <span class="allocation-percent" id="supportPercent">(33.33%)</span>
                             </div>
                         </div>
                         <div class="recognition-info">
-                            <span class="recognition-timing">Recognition: Over Time (ratably over <span id="pcsTermDisplay">5</span> years)</span>
+                            <span class="recognition-timing">Recognition: Over Time (ratably over contract term)</span>
                         </div>
                     </div>
                 </section>
 
                 <section class="example-section">
-                    <h2>Example Calculation (from ASC 606 Guidelines)</h2>
-                    <div class="example-card">
-                        <h4>On-premise Software Contract</h4>
-                        <ul>
-                            <li><strong>License:</strong> One-time cost ($8,000 SSP)</li>
-                            <li><strong>PCS:</strong> Five-year term ($1,000 per year SSP)</li>
-                            <li><strong>Total Contract Price:</strong> $12,000</li>
-                        </ul>
-                        <p><strong>SSP Method:</strong> Allocate total transaction price proportionally based on relative SSPs</p>
+                    <h2>Term-Based vs Perpetual License Example</h2>
+                    <div class="example-comparison">
+                        <div class="example-card term-example">
+                            <h4>Term-Based Software (Like Coder)</h4>
+                            <ul>
+                                <li><strong>License:</strong> Right to use for contract term only</li>
+                                <li><strong>Recognition:</strong> Both license and support over time</li>
+                                <li><strong>Rationale:</strong> Customer benefits throughout the term</li>
+                                <li><strong>Pattern:</strong> Even recognition each year</li>
+                            </ul>
+                        </div>
+                        <div class="example-card perpetual-example">
+                            <h4>Perpetual Software (Traditional)</h4>
+                            <ul>
+                                <li><strong>License:</strong> Indefinite right to use software</li>
+                                <li><strong>Recognition:</strong> License at point in time, support over time</li>
+                                <li><strong>Rationale:</strong> Customer gains control immediately</li>
+                                <li><strong>Pattern:</strong> Front-loaded recognition in Year 1</li>
+                            </ul>
+                        </div>
                     </div>
                 </section>
 
@@ -134,18 +170,22 @@
                 <div class="obligations-summary">
                     <div class="summary-card license-summary">
                         <h3>🔑 Software License</h3>
-                        <div class="summary-amount" id="finalLicenseAmount">$7,385</div>
-                        <div class="summary-timing">Recognized at Point in Time</div>
-                        <div class="summary-note">Full amount recognized when license transferred</div>
+                        <div class="summary-amount" id="finalLicenseAmount">$8,000</div>
+                        <div class="summary-timing" id="licenseSummaryTiming">Recognized Over Time</div>
+                        <div class="summary-timing">
+                            <div>Total License Revenue: <span id="licenseTotal">$8,000</span></div>
+                            <div>Annual Recognition: <span id="licenseAnnual">$2,667</span></div>
+                            <div>Monthly Recognition: <span id="licenseMonthly">$222</span></div>
+                        </div>
                     </div>
                     
-                    <div class="summary-card pcs-summary">
-                        <h3>🛠️ Post-Contract Support</h3>
-                        <div class="summary-amount" id="finalPcsAmount">$4,615</div>
+                    <div class="summary-card support-summary">
+                        <h3>🛠️ Support Services</h3>
+                        <div class="summary-amount" id="finalSupportAmount">$4,000</div>
                         <div class="summary-timing">
-                            <div>Total PCS Revenue: <span id="pcsTotal">$4,615</span></div>
-                            <div>Annual Recognition: <span id="pcsAnnual">$923</span></div>
-                            <div>Monthly Recognition: <span id="pcsMonthly">$77</span></div>
+                            <div>Total Support Revenue: <span id="supportTotal">$4,000</span></div>
+                            <div>Annual Recognition: <span id="supportAnnual">$1,333</span></div>
+                            <div>Monthly Recognition: <span id="supportMonthly">$111</span></div>
                         </div>
                     </div>
                 </div>
@@ -157,7 +197,7 @@
                             <tr>
                                 <th>Year</th>
                                 <th>License Revenue</th>
-                                <th>PCS Revenue</th>
+                                <th>Support Revenue</th>
                                 <th>Total Revenue</th>
                                 <th>Cumulative</th>
                             </tr>
@@ -176,8 +216,8 @@
                         <div class="compliance-step">
                             <strong>Step 2:</strong> Two distinct performance obligations identified ✅
                             <ul>
-                                <li>Software License (distinct and customer benefits independently)</li>
-                                <li>Post-Contract Support (distinct ongoing service)</li>
+                                <li>Term-Based Software License (right to use for contract term)</li>
+                                <li>Support Services (ongoing technical support)</li>
                             </ul>
                         </div>
                         <div class="compliance-step">
@@ -186,15 +226,15 @@
                         <div class="compliance-step">
                             <strong>Step 4:</strong> Transaction price allocated based on relative SSP ✅
                             <ul>
-                                <li>License: <span id="complianceLicense">56.77%</span> of contract price</li>
-                                <li>PCS: <span id="compliancePcs">38.46%</span> of contract price</li>
+                                <li>License: <span id="complianceLicense">66.67%</span> of contract price</li>
+                                <li>Support: <span id="complianceSupport">33.33%</span> of contract price</li>
                             </ul>
                         </div>
                         <div class="compliance-step">
                             <strong>Step 5:</strong> Revenue recognized when/as obligations satisfied ✅
                             <ul>
-                                <li>License: Point in time (when transferred and customer can benefit)</li>
-                                <li>PCS: Over time (as support services are provided ratably)</li>
+                                <li id="complianceLicenseRecognition">License: Over time (customer benefits throughout term)</li>
+                                <li>Support: Over time (as support services are provided ratably)</li>
                             </ul>
                         </div>
                     </div>
