@@ -1,24 +1,19 @@
-class RevenueCalculator {
+class LicenseSupportRevenueCalculator {
     constructor() {
         this.form = document.getElementById('revenueForm');
         this.resultsSection = document.getElementById('results');
-        this.outputInputs = document.getElementById('outputInputs');
-        this.inputInputs = document.getElementById('inputInputs');
-        this.unitsPerYearDiv = document.getElementById('unitsPerYear');
-        this.costsPerYearDiv = document.getElementById('costsPerYear');
         
         this.initializeEventListeners();
     }
 
     initializeEventListeners() {
-        // Method selection change
-        document.querySelectorAll('input[name="recognitionMethod"]').forEach(radio => {
-            radio.addEventListener('change', () => this.toggleMethodInputs());
+        // Allocation percentage changes
+        document.getElementById('licenseAllocation').addEventListener('input', () => {
+            this.updateAllocationTotal();
         });
-
-        // Contract term change to generate year inputs
-        document.getElementById('contractTerm').addEventListener('input', () => {
-            this.generateYearInputs();
+        
+        document.getElementById('supportAllocation').addEventListener('input', () => {
+            this.updateAllocationTotal();
         });
 
         // Form submission
@@ -31,209 +26,136 @@ class RevenueCalculator {
         this.form.addEventListener('reset', () => {
             setTimeout(() => {
                 this.resultsSection.style.display = 'none';
-                this.generateYearInputs();
+                this.resetAllocationPercentages();
             }, 100);
         });
+
+        // Initialize allocation total
+        this.updateAllocationTotal();
     }
 
-    toggleMethodInputs() {
-        const selectedMethod = document.querySelector('input[name="recognitionMethod"]:checked').value;
+    resetAllocationPercentages() {
+        document.getElementById('licenseAllocation').value = 85;
+        document.getElementById('supportAllocation').value = 15;
+        this.updateAllocationTotal();
+    }
+
+    updateAllocationTotal() {
+        const licensePercent = parseFloat(document.getElementById('licenseAllocation').value) || 0;
+        const supportPercent = parseFloat(document.getElementById('supportAllocation').value) || 0;
+        const total = licensePercent + supportPercent;
         
-        if (selectedMethod === 'output') {
-            this.outputInputs.style.display = 'block';
-            this.inputInputs.style.display = 'none';
+        const totalElement = document.getElementById('totalAllocation');
+        totalElement.textContent = `${total}%`;
+        
+        // Color coding for validation
+        if (total === 100) {
+            totalElement.style.color = '#27ae60';
         } else {
-            this.outputInputs.style.display = 'none';
-            this.inputInputs.style.display = 'block';
-        }
-        
-        this.generateYearInputs();
-    }
-
-    generateYearInputs() {
-        const contractTerm = parseInt(document.getElementById('contractTerm').value) || 0;
-        const selectedMethod = document.querySelector('input[name="recognitionMethod"]:checked').value;
-        
-        if (contractTerm <= 0) return;
-        
-        if (selectedMethod === 'output') {
-            this.generateUnitsInputs(contractTerm);
-        } else {
-            this.generateCostsInputs(contractTerm);
-        }
-    }
-
-    generateUnitsInputs(contractTerm) {
-        this.unitsPerYearDiv.innerHTML = '';
-        
-        for (let year = 1; year <= contractTerm; year++) {
-            const yearDiv = document.createElement('div');
-            yearDiv.className = 'year-input';
-            yearDiv.innerHTML = `
-                <label>Year ${year}:</label>
-                <input type="number" id="unitsYear${year}" min="0" placeholder="Units delivered in year ${year}">
-            `;
-            this.unitsPerYearDiv.appendChild(yearDiv);
-        }
-    }
-
-    generateCostsInputs(contractTerm) {
-        this.costsPerYearDiv.innerHTML = '';
-        
-        for (let year = 1; year <= contractTerm; year++) {
-            const yearDiv = document.createElement('div');
-            yearDiv.className = 'year-input';
-            yearDiv.innerHTML = `
-                <label>Year ${year}:</label>
-                <input type="number" id="costsYear${year}" min="0" step="0.01" placeholder="Costs incurred in year ${year}">
-            `;
-            this.costsPerYearDiv.appendChild(yearDiv);
+            totalElement.style.color = '#e74c3c';
         }
     }
 
     validateInputs() {
-        const totalTransactionPrice = parseFloat(document.getElementById('totalTransactionPrice').value);
+        const totalInvoiceAmount = parseFloat(document.getElementById('totalInvoiceAmount').value);
         const contractTerm = parseInt(document.getElementById('contractTerm').value);
-        const day1Delivery = parseFloat(document.getElementById('day1Delivery').value) || 0;
+        const licensePercent = parseFloat(document.getElementById('licenseAllocation').value);
+        const supportPercent = parseFloat(document.getElementById('supportAllocation').value);
         
-        if (!totalTransactionPrice || totalTransactionPrice <= 0) {
-            throw new Error('Please enter a valid total transaction price');
+        // Basic validation
+        if (!totalInvoiceAmount || totalInvoiceAmount <= 0) {
+            throw new Error('Please enter a valid total invoice amount');
         }
         
         if (!contractTerm || contractTerm <= 0) {
             throw new Error('Please enter a valid contract term');
         }
         
-        if (day1Delivery > totalTransactionPrice) {
-            throw new Error('Day 1 delivery amount cannot exceed total transaction price');
+        if (!licensePercent || licensePercent <= 0) {
+            throw new Error('License allocation must be greater than 0%');
         }
         
-        const selectedMethod = document.querySelector('input[name="recognitionMethod"]:checked').value;
-        
-        if (selectedMethod === 'output') {
-            const totalUnits = parseFloat(document.getElementById('totalUnits').value);
-            if (!totalUnits || totalUnits <= 0) {
-                throw new Error('Please enter total units to be delivered');
-            }
-            
-            let totalUnitsEntered = 0;
-            for (let year = 1; year <= contractTerm; year++) {
-                const units = parseFloat(document.getElementById(`unitsYear${year}`).value) || 0;
-                totalUnitsEntered += units;
-            }
-            
-            if (totalUnitsEntered > totalUnits) {
-                throw new Error('Total units entered across years cannot exceed total units to be delivered');
-            }
-        } else {
-            const totalCosts = parseFloat(document.getElementById('totalCosts').value);
-            if (!totalCosts || totalCosts <= 0) {
-                throw new Error('Please enter total expected costs');
-            }
-            
-            let totalCostsEntered = 0;
-            for (let year = 1; year <= contractTerm; year++) {
-                const costs = parseFloat(document.getElementById(`costsYear${year}`).value) || 0;
-                totalCostsEntered += costs;
-            }
-            
-            if (totalCostsEntered > totalCosts) {
-                throw new Error('Total costs entered across years cannot exceed total expected costs');
-            }
+        if (!supportPercent || supportPercent <= 0) {
+            throw new Error('Support allocation must be greater than 0%');
         }
         
-        return { totalTransactionPrice, contractTerm, day1Delivery };
+        // ASC 606 Step 2 & 3 Validation: Allocation must total 100%
+        if (licensePercent + supportPercent !== 100) {
+            throw new Error('Performance obligation allocations must total exactly 100%');
+        }
+        
+        return { totalInvoiceAmount, contractTerm, licensePercent, supportPercent };
     }
 
     calculateRevenue() {
         try {
-            const { totalTransactionPrice, contractTerm, day1Delivery } = this.validateInputs();
-            const selectedMethod = document.querySelector('input[name="recognitionMethod"]:checked').value;
+            const { totalInvoiceAmount, contractTerm, licensePercent, supportPercent } = this.validateInputs();
             
-            const remainingAmount = totalTransactionPrice - day1Delivery;
-            let schedule = [];
+            // ASC 606 Step 4: Allocate transaction price to performance obligations
+            const licenseAmount = totalInvoiceAmount * (licensePercent / 100);
+            const supportAmount = totalInvoiceAmount * (supportPercent / 100);
             
-            if (selectedMethod === 'output') {
-                schedule = this.calculateOutputMethod(contractTerm, remainingAmount);
-            } else {
-                schedule = this.calculateInputMethod(contractTerm, remainingAmount);
-            }
+            // ASC 606 Step 5: Recognize revenue when/as performance obligations are satisfied
+            const schedule = this.generateRevenueSchedule(licenseAmount, supportAmount, contractTerm);
             
-            this.displayResults(day1Delivery, remainingAmount, schedule);
+            this.displayResults(licenseAmount, supportAmount, contractTerm, schedule);
             
         } catch (error) {
             alert(error.message);
         }
     }
 
-    calculateOutputMethod(contractTerm, remainingAmount) {
-        const totalUnits = parseFloat(document.getElementById('totalUnits').value);
+    generateRevenueSchedule(licenseAmount, supportAmount, contractTerm) {
         const schedule = [];
+        const annualSupportRevenue = supportAmount / contractTerm;
+        const monthlySupportRevenue = supportAmount / (contractTerm * 12);
+        
         let cumulativeRevenue = 0;
-        let cumulativeUnits = 0;
         
         for (let year = 1; year <= contractTerm; year++) {
-            const unitsDelivered = parseFloat(document.getElementById(`unitsYear${year}`).value) || 0;
-            cumulativeUnits += unitsDelivered;
+            let licenseRevenue = 0;
+            let supportRevenue = annualSupportRevenue;
             
-            const progressPercentage = (cumulativeUnits / totalUnits) * 100;
-            const totalRevenueToRecognize = (cumulativeUnits / totalUnits) * remainingAmount;
-            const yearRevenue = totalRevenueToRecognize - cumulativeRevenue;
-            cumulativeRevenue += yearRevenue;
+            // License revenue only recognized in Year 1 (Day 1)
+            if (year === 1) {
+                licenseRevenue = licenseAmount;
+            }
+            
+            const totalYearRevenue = licenseRevenue + supportRevenue;
+            cumulativeRevenue += totalYearRevenue;
             
             schedule.push({
                 year: year,
-                progress: Math.min(progressPercentage, 100),
-                revenue: yearRevenue,
-                cumulative: cumulativeRevenue
+                period: year === 1 ? 'Year 1 (Day 1 + Ratable)' : `Year ${year} (Ratable)`,
+                licenseRevenue: licenseRevenue,
+                supportRevenue: supportRevenue,
+                totalRevenue: totalYearRevenue,
+                cumulativeRevenue: cumulativeRevenue,
+                monthlySupport: monthlySupportRevenue
             });
         }
         
         return schedule;
     }
 
-    calculateInputMethod(contractTerm, remainingAmount) {
-        const totalCosts = parseFloat(document.getElementById('totalCosts').value);
-        const schedule = [];
-        let cumulativeRevenue = 0;
-        let cumulativeCosts = 0;
+    displayResults(licenseAmount, supportAmount, contractTerm, schedule) {
+        // Update performance obligation summaries
+        document.getElementById('licenseAmount').textContent = this.formatCurrency(licenseAmount);
+        document.getElementById('supportAmount').textContent = this.formatCurrency(supportAmount);
+        document.getElementById('monthlySupport').textContent = this.formatCurrency(supportAmount / (contractTerm * 12));
         
-        for (let year = 1; year <= contractTerm; year++) {
-            const costsIncurred = parseFloat(document.getElementById(`costsYear${year}`).value) || 0;
-            cumulativeCosts += costsIncurred;
-            
-            const progressPercentage = (cumulativeCosts / totalCosts) * 100;
-            const totalRevenueToRecognize = (cumulativeCosts / totalCosts) * remainingAmount;
-            const yearRevenue = totalRevenueToRecognize - cumulativeRevenue;
-            cumulativeRevenue += yearRevenue;
-            
-            schedule.push({
-                year: year,
-                progress: Math.min(progressPercentage, 100),
-                revenue: yearRevenue,
-                cumulative: cumulativeRevenue
-            });
-        }
-        
-        return schedule;
-    }
-
-    displayResults(day1Amount, remainingAmount, schedule) {
-        // Update summary
-        document.getElementById('day1Amount').textContent = this.formatCurrency(day1Amount);
-        document.getElementById('remainingAmount').textContent = this.formatCurrency(remainingAmount);
-        
-        // Update schedule table
+        // Update revenue schedule table
         const tableBody = document.getElementById('scheduleBody');
         tableBody.innerHTML = '';
         
         schedule.forEach(item => {
             const row = tableBody.insertRow();
             row.innerHTML = `
-                <td>${item.year}</td>
-                <td class="percentage">${item.progress.toFixed(2)}%</td>
-                <td class="currency">${this.formatCurrency(item.revenue)}</td>
-                <td class="currency">${this.formatCurrency(item.cumulative)}</td>
+                <td><strong>${item.period}</strong></td>
+                <td class="currency">${this.formatCurrency(item.licenseRevenue)}</td>
+                <td class="currency">${this.formatCurrency(item.supportRevenue)}</td>
+                <td class="currency total-revenue">${this.formatCurrency(item.totalRevenue)}</td>
+                <td class="currency cumulative">${this.formatCurrency(item.cumulativeRevenue)}</td>
             `;
         });
         
@@ -245,12 +167,56 @@ class RevenueCalculator {
     formatCurrency(amount) {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
-            currency: 'USD'
+            currency: 'USD',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
         }).format(amount);
+    }
+}
+
+// ASC 606 Compliance Information
+class ASC606ComplianceHelper {
+    static showComplianceInfo() {
+        return {
+            step1: "Contract Identification: Software license + support services contract with defined terms",
+            step2: "Performance Obligations: (1) Software License - satisfied at point in time, (2) Support Services - satisfied over time",
+            step3: "Transaction Price: Total invoice amount allocated based on standalone selling prices (SSP)",
+            step4: "Allocation: Revenue allocated to each performance obligation based on relative SSP",
+            step5: "Recognition: License revenue recognized when customer gains control (Day 1), Support revenue recognized ratably as services are provided"
+        };
+    }
+    
+    static validateSSPAllocation(licensePercent, supportPercent) {
+        // In practice, this should be based on actual SSP analysis
+        // This is a simplified validation for the common 85/15 split
+        const isCommonSplit = (licensePercent === 85 && supportPercent === 15);
+        
+        return {
+            isValid: licensePercent + supportPercent === 100,
+            isCommonSplit: isCommonSplit,
+            warning: !isCommonSplit ? "Ensure allocation reflects actual standalone selling prices per ASC 606-10-32-31" : null
+        };
     }
 }
 
 // Initialize calculator when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new RevenueCalculator();
+    new LicenseSupportRevenueCalculator();
+    
+    // Add SSP validation warning if needed
+    const licenseInput = document.getElementById('licenseAllocation');
+    const supportInput = document.getElementById('supportAllocation');
+    
+    [licenseInput, supportInput].forEach(input => {
+        input.addEventListener('blur', () => {
+            const licensePercent = parseFloat(document.getElementById('licenseAllocation').value) || 0;
+            const supportPercent = parseFloat(document.getElementById('supportAllocation').value) || 0;
+            
+            const validation = ASC606ComplianceHelper.validateSSPAllocation(licensePercent, supportPercent);
+            
+            if (validation.warning) {
+                console.warn('ASC 606 SSP Warning:', validation.warning);
+            }
+        });
+    });
 });

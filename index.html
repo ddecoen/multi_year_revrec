@@ -3,106 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASC 606 Multi-Year Revenue Recognition Calculator</title>
+    <title>ASC 606 License + Support Revenue Recognition Calculator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>ASC 606 Multi-Year Revenue Recognition Calculator</h1>
-            <p>Allocate transaction price over multiple year agreements for performance obligations</p>
+            <h1>ASC 606 License + Support Revenue Recognition Calculator</h1>
+            <p>Calculate revenue recognition for software license (85% - Day 1) and support services (15% - Ratable)</p>
         </header>
 
         <main>
             <form id="revenueForm">
                 <section class="contract-info">
-                    <h2>Contract Information</h2>
+                    <h2>Step 1: Contract Information (ASC 606 Step 1 - Identify Contract)</h2>
                     <div class="form-group">
-                        <label for="totalTransactionPrice">Total Transaction Price ($)</label>
-                        <input type="number" id="totalTransactionPrice" step="0.01" required>
+                        <label for="totalInvoiceAmount">Total Day 1 Invoice Amount ($)</label>
+                        <input type="number" id="totalInvoiceAmount" step="0.01" required>
+                        <small>This is the total amount invoiced to the customer on day 1</small>
                     </div>
                     <div class="form-group">
                         <label for="contractTerm">Contract Term (Years)</label>
                         <input type="number" id="contractTerm" min="1" max="10" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="day1Delivery">Day 1 Delivery Amount ($)</label>
-                        <input type="number" id="day1Delivery" step="0.01" min="0">
+                        <small>Support services will be recognized ratably over this period</small>
                     </div>
                 </section>
 
-                <section class="recognition-method">
-                    <h2>Revenue Recognition Method</h2>
-                    <div class="method-selection">
-                        <input type="radio" id="outputMethod" name="recognitionMethod" value="output" checked>
-                        <label for="outputMethod">
-                            <strong>Output Method</strong>
-                            <span>Measure progress based on direct measurements of value transferred</span>
-                        </label>
+                <section class="performance-obligations">
+                    <h2>Step 2: Performance Obligations (ASC 606 Step 2 - Identify Performance Obligations)</h2>
+                    <div class="obligation-card">
+                        <h3>🔑 Software License</h3>
+                        <div class="form-group">
+                            <label for="licenseAllocation">License Allocation (%)</label>
+                            <input type="number" id="licenseAllocation" value="85" min="1" max="99" required>
+                            <small>Percentage of transaction price allocated to license (recognized at point in time)</small>
+                        </div>
                     </div>
-                    <div class="method-selection">
-                        <input type="radio" id="inputMethod" name="recognitionMethod" value="input">
-                        <label for="inputMethod">
-                            <strong>Input Method</strong>
-                            <span>Measure progress based on entity's efforts or inputs</span>
-                        </label>
+                    <div class="obligation-card">
+                        <h3>🛠️ Support Services</h3>
+                        <div class="form-group">
+                            <label for="supportAllocation">Support Allocation (%)</label>
+                            <input type="number" id="supportAllocation" value="15" min="1" max="99" required>
+                            <small>Percentage of transaction price allocated to support (recognized over time)</small>
+                        </div>
                     </div>
-                </section>
-
-                <section class="output-method-inputs" id="outputInputs">
-                    <h3>Output Method Details</h3>
-                    <div class="form-group">
-                        <label for="totalUnits">Total Units to be Delivered</label>
-                        <input type="number" id="totalUnits" min="1">
-                    </div>
-                    <div class="form-group">
-                        <label for="unitsDelivered">Units Delivered per Year</label>
-                        <div id="unitsPerYear"></div>
+                    <div class="allocation-total">
+                        <span>Total Allocation: <strong id="totalAllocation">100%</strong></span>
                     </div>
                 </section>
 
-                <section class="input-method-inputs" id="inputInputs" style="display: none;">
-                    <h3>Input Method Details</h3>
-                    <div class="form-group">
-                        <label for="totalCosts">Total Expected Costs ($)</label>
-                        <input type="number" id="totalCosts" step="0.01" min="0">
+                <section class="ssp-section">
+                    <h2>Step 3: Standalone Selling Price (ASC 606 Step 3 - Determine Transaction Price)</h2>
+                    <div class="ssp-info">
+                        <p><strong>ASC 606 Compliance:</strong> The allocation percentages above should reflect the standalone selling prices (SSP) of each performance obligation. This calculator assumes you have determined the appropriate SSP allocation.</p>
                     </div>
-                    <div class="form-group">
-                        <label for="costsIncurred">Costs Incurred per Year</label>
-                        <div id="costsPerYear"></div>
+                </section>
+
+                <section class="recognition-timing">
+                    <h2>Step 4: Revenue Recognition Timing (ASC 606 Step 4 & 5)</h2>
+                    <div class="timing-card">
+                        <h4>License Recognition</h4>
+                        <p>✅ <strong>Point in Time:</strong> License revenue recognized on Day 1 when customer gains control</p>
+                    </div>
+                    <div class="timing-card">
+                        <h4>Support Recognition</h4>
+                        <p>📅 <strong>Over Time:</strong> Support revenue recognized ratably over contract term as services are provided</p>
                     </div>
                 </section>
 
                 <div class="form-actions">
-                    <button type="submit">Calculate Revenue Recognition</button>
+                    <button type="submit">Calculate ASC 606 Revenue Schedule</button>
                     <button type="reset">Reset</button>
                 </div>
             </form>
 
             <section class="results" id="results" style="display: none;">
-                <h2>Revenue Recognition Schedule</h2>
-                <div class="summary">
-                    <div class="summary-item">
-                        <span>Day 1 Recognition:</span>
-                        <span id="day1Amount">$0.00</span>
+                <h2>ASC 606 Revenue Recognition Schedule</h2>
+                
+                <div class="performance-obligations-summary">
+                    <div class="obligation-summary license-summary">
+                        <h3>🔑 Software License</h3>
+                        <div class="summary-details">
+                            <div class="summary-item">
+                                <span>Allocated Amount:</span>
+                                <span id="licenseAmount">$0.00</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Recognition:</span>
+                                <span>Day 1 (Point in Time)</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="summary-item">
-                        <span>Remaining Amount:</span>
-                        <span id="remainingAmount">$0.00</span>
+                    
+                    <div class="obligation-summary support-summary">
+                        <h3>🛠️ Support Services</h3>
+                        <div class="summary-details">
+                            <div class="summary-item">
+                                <span>Allocated Amount:</span>
+                                <span id="supportAmount">$0.00</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Recognition:</span>
+                                <span>Ratable Over Contract Term</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Monthly Amount:</span>
+                                <span id="monthlySupport">$0.00</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <table id="scheduleTable">
-                    <thead>
-                        <tr>
-                            <th>Year</th>
-                            <th>Progress %</th>
-                            <th>Revenue Amount</th>
-                            <th>Cumulative Revenue</th>
-                        </tr>
-                    </thead>
-                    <tbody id="scheduleBody">
-                    </tbody>
-                </table>
+
+                <div class="revenue-schedule">
+                    <h3>Annual Revenue Recognition Schedule</h3>
+                    <table id="scheduleTable">
+                        <thead>
+                            <tr>
+                                <th>Period</th>
+                                <th>License Revenue</th>
+                                <th>Support Revenue</th>
+                                <th>Total Revenue</th>
+                                <th>Cumulative Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="scheduleBody">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="asc606-compliance">
+                    <h3>ASC 606 Compliance Summary</h3>
+                    <div class="compliance-grid">
+                        <div class="compliance-item">
+                            <strong>Step 1:</strong> Contract identified ✅
+                        </div>
+                        <div class="compliance-item">
+                            <strong>Step 2:</strong> Performance obligations identified (License + Support) ✅
+                        </div>
+                        <div class="compliance-item">
+                            <strong>Step 3:</strong> Transaction price allocated based on SSP ✅
+                        </div>
+                        <div class="compliance-item">
+                            <strong>Step 4:</strong> Revenue allocated to performance obligations ✅
+                        </div>
+                        <div class="compliance-item">
+                            <strong>Step 5:</strong> Revenue recognized when/as obligations satisfied ✅
+                        </div>
+                    </div>
+                </div>
             </section>
         </main>
     </div>

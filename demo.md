@@ -1,78 +1,168 @@
-# ASC 606 Revenue Recognition Calculator - Demo Examples
+# ASC 606 License + Support Revenue Recognition Calculator - Demo Examples
 
-## Example 1: Software License (Output Method)
+## Overview
 
-**Scenario:** A company sells a 3-year software license for $300,000. They deliver 30% of functionality on day 1, and the remaining functionality is delivered based on feature releases.
+This calculator handles the specific scenario where:
+- A software company sells a license + support bundle
+- Total invoice amount is allocated between license (typically 85%) and support (typically 15%)
+- License revenue is recognized at point in time (Day 1)
+- Support revenue is recognized ratably over the contract term
+
+## ASC 606 Compliance Framework
+
+### Step 1: Identify the Contract
+- Software license + support services contract with defined terms
+- Clear payment terms and deliverables
+
+### Step 2: Identify Performance Obligations
+1. **Software License**: Distinct performance obligation satisfied at point in time
+2. **Support Services**: Distinct performance obligation satisfied over time
+
+### Step 3: Determine Transaction Price
+- Total day 1 invoice amount
+- Allocated based on standalone selling prices (SSP)
+
+### Step 4: Allocate Transaction Price
+- License: Based on SSP (commonly 85% of total)
+- Support: Based on SSP (commonly 15% of total)
+
+### Step 5: Recognize Revenue
+- License: When customer gains control (Day 1)
+- Support: Ratably as services are provided over contract term
+
+## Example 1: Standard Software License + Support (3-Year Term)
+
+**Scenario:** Enterprise software company sells 3-year license + support bundle
 
 **Inputs:**
-- Total Transaction Price: $300,000
+- Total Day 1 Invoice: $300,000
 - Contract Term: 3 years
-- Day 1 Delivery: $90,000
-- Recognition Method: Output Method
-- Total Units: 1000 features
-- Year 1: 400 features
-- Year 2: 300 features
-- Year 3: 300 features
+- License Allocation: 85%
+- Support Allocation: 15%
 
-**Expected Results:**
-- Day 1 Recognition: $90,000
-- Remaining Amount: $210,000
-- Year 1: $84,000 (40% of remaining)
-- Year 2: $63,000 (30% of remaining)
-- Year 3: $63,000 (30% of remaining)
+**ASC 606 Calculation:**
+- License Amount: $300,000 × 85% = $255,000
+- Support Amount: $300,000 × 15% = $45,000
 
-## Example 2: Construction Contract (Input Method)
+**Revenue Recognition Schedule:**
+- **Year 1:** $255,000 (license) + $15,000 (support) = $270,000
+- **Year 2:** $0 (license) + $15,000 (support) = $15,000
+- **Year 3:** $0 (license) + $15,000 (support) = $15,000
+- **Monthly Support Recognition:** $1,250/month
 
-**Scenario:** A construction project worth $500,000 over 2 years, with no day 1 delivery, recognized based on costs incurred.
+## Example 2: Large Enterprise Deal (5-Year Term)
+
+**Scenario:** Major enterprise deployment with extended support
 
 **Inputs:**
-- Total Transaction Price: $500,000
+- Total Day 1 Invoice: $1,000,000
+- Contract Term: 5 years
+- License Allocation: 85%
+- Support Allocation: 15%
+
+**ASC 606 Calculation:**
+- License Amount: $1,000,000 × 85% = $850,000
+- Support Amount: $1,000,000 × 15% = $150,000
+
+**Revenue Recognition Schedule:**
+- **Year 1:** $850,000 (license) + $30,000 (support) = $880,000
+- **Years 2-5:** $0 (license) + $30,000 (support) = $30,000 each year
+- **Monthly Support Recognition:** $2,500/month
+
+## Example 3: Custom SSP Allocation
+
+**Scenario:** Company with different SSP analysis results
+
+**Inputs:**
+- Total Day 1 Invoice: $500,000
 - Contract Term: 2 years
-- Day 1 Delivery: $0
-- Recognition Method: Input Method
-- Total Expected Costs: $300,000
-- Year 1 Costs: $180,000
-- Year 2 Costs: $120,000
+- License Allocation: 80% (based on company's SSP analysis)
+- Support Allocation: 20% (based on company's SSP analysis)
 
-**Expected Results:**
-- Day 1 Recognition: $0
-- Remaining Amount: $500,000
-- Year 1: $300,000 (60% of total based on 60% costs)
-- Year 2: $200,000 (40% of total based on 40% costs)
+**ASC 606 Calculation:**
+- License Amount: $500,000 × 80% = $400,000
+- Support Amount: $500,000 × 20% = $100,000
 
-## Key Features Implemented
+**Revenue Recognition Schedule:**
+- **Year 1:** $400,000 (license) + $50,000 (support) = $450,000
+- **Year 2:** $0 (license) + $50,000 (support) = $50,000
+- **Monthly Support Recognition:** $4,167/month
 
-1. **Progress Measurement Methods:**
-   - Output Method: Based on units delivered, milestones, or direct value transfer
-   - Input Method: Based on costs incurred or labor hours
+## Key ASC 606 Considerations
 
-2. **Multi-Year Allocation:**
-   - Supports contracts up to 10 years
-   - Dynamic year input generation
-   - Cumulative progress tracking
+### Standalone Selling Price (SSP) Determination
 
-3. **Day 1 Recognition:**
-   - Separate field for immediate delivery recognition
-   - Automatically calculates remaining amount for allocation
+**Observable SSP:**
+- Use actual prices when license and support are sold separately
+- Historical pricing data for similar arrangements
 
-4. **Validation:**
-   - Ensures inputs don't exceed totals
-   - Validates all required fields
-   - Prevents negative values
+**Estimated SSP (when not directly observable):**
+- **Adjusted market assessment:** Competitor pricing analysis
+- **Expected cost plus margin:** Cost-based pricing with appropriate margin
+- **Residual approach:** Only when SSP is highly variable or uncertain
 
-5. **Professional Display:**
-   - Summary cards showing key amounts
-   - Detailed schedule table
-   - Progress percentages and cumulative tracking
-   - Currency formatting
+### License vs. Support Characteristics
 
-## ASC 606 Compliance
+**Software License (Point in Time Recognition):**
+- ✅ Customer has legal title to the software
+- ✅ Customer has physical possession (download/installation)
+- ✅ Customer accepts the software
+- ✅ Customer bears risks and rewards of ownership
+- ✅ Entity has right to payment
 
-This calculator implements the core principles from ASC 606 Section 4 - "Recognize Revenue for Multi-Year Obligations":
+**Support Services (Over Time Recognition):**
+- ✅ Customer simultaneously receives and consumes benefits
+- ✅ Entity's performance creates/enhances asset customer controls
+- ✅ Entity has right to payment for performance completed to date
 
-- **Measure Progress:** Choose between output and input methods
-- **Revenue Recognition Methods:** 
-  - Output Methods: Direct measurements of value transferred
-  - Input Methods: Entity's efforts or inputs toward completion
-- **Method Selection:** Reflects the transfer of control to the customer
-- **Multi-jurisdiction Support:** Handles revenue allocation across different periods
+### Common Allocation Percentages by Industry
+
+**Enterprise Software:**
+- License: 80-90%
+- Support: 10-20%
+
+**SaaS/Cloud Solutions:**
+- Hosting/Platform: 70-85%
+- Support/Professional Services: 15-30%
+
+**On-Premise + Cloud Hybrid:**
+- License: 60-75%
+- Support: 15-25%
+- Cloud Services: 10-20%
+
+## Validation and Testing
+
+### Calculator Features
+
+1. **Real-time Allocation Validation**: Ensures percentages total 100%
+2. **ASC 606 Step Compliance**: Validates each step of the revenue recognition process
+3. **Professional Display**: Shows detailed breakdown by performance obligation
+4. **Monthly/Annual Views**: Provides both perspectives for financial planning
+
+### Best Practices
+
+1. **Document SSP Analysis**: Maintain supporting documentation for allocation percentages
+2. **Regular Review**: Update SSP allocations based on current market data
+3. **Audit Preparation**: Ensure calculator outputs support financial statement assertions
+4. **Contract Review**: Validate that contracts clearly define performance obligations
+
+## Technical Implementation
+
+### Browser Compatibility
+- Modern browsers with ES6+ support
+- Mobile-responsive design
+- No external dependencies
+
+### Data Validation
+- Input sanitization and validation
+- Mathematical precision for financial calculations
+- Error handling and user feedback
+
+### Security
+- Client-side only (no data transmission)
+- No personal or financial data storage
+- HTTPS deployment recommended
+
+---
+
+**Need Help?** This calculator implements ASC 606 revenue recognition standards for software license + support bundles. For complex scenarios or audit requirements, consult with qualified accounting professionals.
