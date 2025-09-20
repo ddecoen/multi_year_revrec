@@ -1,31 +1,28 @@
-class MultiObligationRevenueCalculator {
+class LicensePCSRevenueCalculator {
     constructor() {
         this.form = document.getElementById('revenueForm');
         this.resultsSection = document.getElementById('results');
         
-        // SSP inputs
-        this.installationSSPInput = document.getElementById('installationSSP');
+        // Input elements
+        this.contractPriceInput = document.getElementById('totalContractPrice');
+        this.contractTermInput = document.getElementById('contractTerm');
         this.licenseSSPInput = document.getElementById('licenseSSP');
-        this.supportSSPInput = document.getElementById('supportSSP');
+        this.pcsAnnualSSPInput = document.getElementById('pcsAnnualSSP');
         
         this.initializeEventListeners();
-        this.updateSSPCalculations();
+        this.updateCalculations();
     }
 
     initializeEventListeners() {
-        // SSP input changes
-        [this.installationSSPInput, this.licenseSSPInput, this.supportSSPInput].forEach(input => {
-            input.addEventListener('input', () => this.updateSSPCalculations());
-        });
-        
-        // Contract price changes
-        document.getElementById('totalContractPrice').addEventListener('input', () => {
-            this.updateAllocationAmounts();
-        });
+        // Input change events
+        [this.contractPriceInput, this.contractTermInput, this.licenseSSPInput, this.pcsAnnualSSPInput]
+            .forEach(input => {
+                input.addEventListener('input', () => this.updateCalculations());
+            });
         
         // Calculate allocation button
         document.getElementById('calculateAllocation').addEventListener('click', () => {
-            this.updateSSPCalculations();
+            this.updateCalculations();
         });
 
         // Form submission
@@ -44,139 +41,134 @@ class MultiObligationRevenueCalculator {
     }
     
     resetToDefaults() {
-        // Reset to default SSP values from the example
-        this.installationSSPInput.value = 150000;
-        this.licenseSSPInput.value = 600000;
-        this.supportSSPInput.value = 300000;
-        document.getElementById('contractTerm').value = 3;
-        this.updateSSPCalculations();
+        // Reset to example values from ASC 606 guidelines
+        this.contractPriceInput.value = 12000;
+        this.contractTermInput.value = 5;
+        this.licenseSSPInput.value = 8000;
+        this.pcsAnnualSSPInput.value = 1000;
+        this.updateCalculations();
     }
 
-    updateSSPCalculations() {
-        const installationSSP = parseFloat(this.installationSSPInput.value) || 0;
-        const licenseSSP = parseFloat(this.licenseSSPInput.value) || 0;
-        const supportSSP = parseFloat(this.supportSSPInput.value) || 0;
+    updateCalculations() {
+        const contractTerm = parseInt(this.contractTermInput.value) || 5;
+        const licenseSSP = parseFloat(this.licenseSSPInput.value) || 8000;
+        const pcsAnnualSSP = parseFloat(this.pcsAnnualSSPInput.value) || 1000;
+        const contractPrice = parseFloat(this.contractPriceInput.value) || 12000;
         
-        const totalSSP = installationSSP + licenseSSP + supportSSP;
+        // Calculate total PCS SSP
+        const totalPcsSSP = pcsAnnualSSP * contractTerm;
+        const totalSSP = licenseSSP + totalPcsSSP;
         
-        // Update total SSP display
+        // Update PCS SSP displays
+        document.getElementById('pcsYears').textContent = contractTerm;
+        document.getElementById('totalPcsSSP').textContent = this.formatCurrency(totalPcsSSP);
+        document.getElementById('displayPcsYears').textContent = contractTerm;
+        document.getElementById('displayTotalPcsSSP').textContent = this.formatCurrency(totalPcsSSP);
+        document.getElementById('pcsTermDisplay').textContent = contractTerm;
+        
+        // Update SSP breakdown
+        document.getElementById('displayLicenseSSP').textContent = this.formatCurrency(licenseSSP);
         document.getElementById('totalSSP').textContent = this.formatCurrency(totalSSP);
         
+        // Calculate allocation based on relative SSP (ASC 606 method)
         if (totalSSP > 0) {
-            // Calculate allocation percentages
-            const installationPercent = (installationSSP / totalSSP) * 100;
+            const licenseAmount = (licenseSSP / totalSSP) * contractPrice;
+            const pcsAmount = (totalPcsSSP / totalSSP) * contractPrice;
+            
             const licensePercent = (licenseSSP / totalSSP) * 100;
-            const supportPercent = (supportSSP / totalSSP) * 100;
+            const pcsPercent = (totalPcsSSP / totalSSP) * 100;
             
-            // Update percentage displays
-            document.getElementById('installationPercent').textContent = installationPercent.toFixed(2) + '%';
-            document.getElementById('licensePercent').textContent = licensePercent.toFixed(2) + '%';
-            document.getElementById('supportPercent').textContent = supportPercent.toFixed(2) + '%';
+            // Update formula displays
+            document.getElementById('calcLicenseSSP').textContent = this.formatNumber(licenseSSP);
+            document.getElementById('calcPcsSSP').textContent = this.formatNumber(totalPcsSSP);
+            document.getElementById('calcTotalSSP1').textContent = this.formatNumber(totalSSP);
+            document.getElementById('calcTotalSSP2').textContent = this.formatNumber(totalSSP);
+            document.getElementById('calcContractPrice1').textContent = this.formatNumber(contractPrice);
+            document.getElementById('calcContractPrice2').textContent = this.formatNumber(contractPrice);
             
-            // Update compliance section
-            document.getElementById('complianceInstallation').textContent = installationPercent.toFixed(2) + '%';
-            document.getElementById('complianceLicense').textContent = licensePercent.toFixed(2) + '%';
-            document.getElementById('complianceSupport').textContent = supportPercent.toFixed(2) + '%';
-            
-            // Store percentages for calculations
-            this.allocationPercentages = {
-                installation: installationPercent,
-                license: licensePercent,
-                support: supportPercent
-            };
-        }
-        
-        this.updateAllocationAmounts();
-    }
-    
-    updateAllocationAmounts() {
-        const contractPrice = parseFloat(document.getElementById('totalContractPrice').value) || 0;
-        
-        if (contractPrice > 0 && this.allocationPercentages) {
-            const installationAmount = contractPrice * (this.allocationPercentages.installation / 100);
-            const licenseAmount = contractPrice * (this.allocationPercentages.license / 100);
-            const supportAmount = contractPrice * (this.allocationPercentages.support / 100);
-            
-            document.getElementById('installationAmount').textContent = this.formatCurrency(installationAmount);
+            // Update allocation results
             document.getElementById('licenseAmount').textContent = this.formatCurrency(licenseAmount);
-            document.getElementById('supportAmount').textContent = this.formatCurrency(supportAmount);
+            document.getElementById('pcsAmount').textContent = this.formatCurrency(pcsAmount);
+            document.getElementById('licensePercent').textContent = `(${licensePercent.toFixed(2)}%)`;
+            document.getElementById('pcsPercent').textContent = `(${pcsPercent.toFixed(2)}%)`;
+            
+            // Update compliance percentages
+            document.getElementById('complianceLicense').textContent = licensePercent.toFixed(2) + '%';
+            document.getElementById('compliancePcs').textContent = pcsPercent.toFixed(2) + '%';
+            
+            // Store calculated values
+            this.calculatedValues = {
+                licenseAmount: licenseAmount,
+                pcsAmount: pcsAmount,
+                licensePercent: licensePercent,
+                pcsPercent: pcsPercent,
+                contractTerm: contractTerm
+            };
         }
     }
 
     validateInputs() {
-        const contractPrice = parseFloat(document.getElementById('totalContractPrice').value);
-        const contractTerm = parseInt(document.getElementById('contractTerm').value);
-        const installationSSP = parseFloat(this.installationSSPInput.value);
+        const contractPrice = parseFloat(this.contractPriceInput.value);
+        const contractTerm = parseInt(this.contractTermInput.value);
         const licenseSSP = parseFloat(this.licenseSSPInput.value);
-        const supportSSP = parseFloat(this.supportSSPInput.value);
+        const pcsAnnualSSP = parseFloat(this.pcsAnnualSSPInput.value);
         
-        // Basic validation
         if (!contractPrice || contractPrice <= 0) {
             throw new Error('Please enter a valid total contract price');
         }
         
         if (!contractTerm || contractTerm <= 0) {
-            throw new Error('Please enter a valid contract term');
-        }
-        
-        if (!installationSSP || installationSSP <= 0) {
-            throw new Error('Please enter a valid Installation SSP');
+            throw new Error('Please enter a valid PCS term');
         }
         
         if (!licenseSSP || licenseSSP <= 0) {
             throw new Error('Please enter a valid License SSP');
         }
         
-        if (!supportSSP || supportSSP <= 0) {
-            throw new Error('Please enter a valid Support SSP');
+        if (!pcsAnnualSSP || pcsAnnualSSP <= 0) {
+            throw new Error('Please enter a valid annual PCS SSP');
         }
         
-        return { contractPrice, contractTerm, installationSSP, licenseSSP, supportSSP };
+        return { contractPrice, contractTerm, licenseSSP, pcsAnnualSSP };
     }
 
     calculateRevenue() {
         try {
-            const { contractPrice, contractTerm } = this.validateInputs();
+            this.validateInputs();
             
-            // Calculate allocated amounts based on SSP percentages
-            const installationAmount = contractPrice * (this.allocationPercentages.installation / 100);
-            const licenseAmount = contractPrice * (this.allocationPercentages.license / 100);
-            const supportAmount = contractPrice * (this.allocationPercentages.support / 100);
+            if (!this.calculatedValues) {
+                throw new Error('Please ensure all calculations are complete');
+            }
+            
+            const { licenseAmount, pcsAmount, contractTerm } = this.calculatedValues;
             
             // Generate revenue recognition schedule
-            const schedule = this.generateRevenueSchedule(
-                installationAmount, 
-                licenseAmount, 
-                supportAmount, 
-                contractTerm
-            );
+            const schedule = this.generateRevenueSchedule(licenseAmount, pcsAmount, contractTerm);
             
-            this.displayResults(installationAmount, licenseAmount, supportAmount, contractTerm, schedule);
+            this.displayResults(licenseAmount, pcsAmount, contractTerm, schedule);
             
         } catch (error) {
             alert(error.message);
         }
     }
 
-    generateRevenueSchedule(installationAmount, licenseAmount, supportAmount, contractTerm) {
+    generateRevenueSchedule(licenseAmount, pcsAmount, contractTerm) {
         const schedule = [];
-        const annualSupportRevenue = supportAmount / contractTerm;
+        const annualPcsRevenue = pcsAmount / contractTerm;
         let cumulativeRevenue = 0;
         
         for (let year = 1; year <= contractTerm; year++) {
-            // Installation and License only recognized in Year 1
-            const installationRevenue = year === 1 ? installationAmount : 0;
+            // License revenue only recognized in Year 1 (point in time)
             const yearLicenseRevenue = year === 1 ? licenseAmount : 0;
-            const yearSupportRevenue = annualSupportRevenue;
+            const yearPcsRevenue = annualPcsRevenue;
             
-            const totalYearRevenue = installationRevenue + yearLicenseRevenue + yearSupportRevenue;
+            const totalYearRevenue = yearLicenseRevenue + yearPcsRevenue;
             cumulativeRevenue += totalYearRevenue;
             
             schedule.push({
                 year: year,
-                installationRevenue: installationRevenue,
                 licenseRevenue: yearLicenseRevenue,
-                supportRevenue: yearSupportRevenue,
+                pcsRevenue: yearPcsRevenue,
                 totalRevenue: totalYearRevenue,
                 cumulativeRevenue: cumulativeRevenue
             });
@@ -185,16 +177,15 @@ class MultiObligationRevenueCalculator {
         return schedule;
     }
 
-    displayResults(installationAmount, licenseAmount, supportAmount, contractTerm, schedule) {
+    displayResults(licenseAmount, pcsAmount, contractTerm, schedule) {
         // Update summary cards
-        document.getElementById('finalInstallationAmount').textContent = this.formatCurrency(installationAmount);
         document.getElementById('finalLicenseAmount').textContent = this.formatCurrency(licenseAmount);
-        document.getElementById('finalSupportAmount').textContent = this.formatCurrency(supportAmount);
+        document.getElementById('finalPcsAmount').textContent = this.formatCurrency(pcsAmount);
         
-        // Update support breakdown
-        document.getElementById('supportTotal').textContent = this.formatCurrency(supportAmount);
-        document.getElementById('supportAnnual').textContent = this.formatCurrency(supportAmount / contractTerm);
-        document.getElementById('supportMonthly').textContent = this.formatCurrency(supportAmount / (contractTerm * 12));
+        // Update PCS breakdown
+        document.getElementById('pcsTotal').textContent = this.formatCurrency(pcsAmount);
+        document.getElementById('pcsAnnual').textContent = this.formatCurrency(pcsAmount / contractTerm);
+        document.getElementById('pcsMonthly').textContent = this.formatCurrency(pcsAmount / (contractTerm * 12));
         
         // Update revenue schedule table
         const tableBody = document.getElementById('scheduleBody');
@@ -204,9 +195,8 @@ class MultiObligationRevenueCalculator {
             const row = tableBody.insertRow();
             row.innerHTML = `
                 <td><strong>Year ${item.year}</strong></td>
-                <td class="currency">${this.formatCurrency(item.installationRevenue)}</td>
                 <td class="currency">${this.formatCurrency(item.licenseRevenue)}</td>
-                <td class="currency">${this.formatCurrency(item.supportRevenue)}</td>
+                <td class="currency">${this.formatCurrency(item.pcsRevenue)}</td>
                 <td class="currency total-revenue">${this.formatCurrency(item.totalRevenue)}</td>
                 <td class="currency cumulative">${this.formatCurrency(item.cumulativeRevenue)}</td>
             `;
@@ -225,40 +215,51 @@ class MultiObligationRevenueCalculator {
             maximumFractionDigits: 0
         }).format(amount);
     }
+    
+    formatNumber(amount) {
+        return new Intl.NumberFormat('en-US', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        }).format(amount);
+    }
 }
 
-// ASC 606 Three-Obligation Compliance Helper
-class ASC606ThreeObligationHelper {
+// ASC 606 License + PCS Compliance Helper
+class ASC606LicensePCSHelper {
     static getComplianceInfo() {
         return {
-            step1: "Contract Identification: Software implementation + license + support services",
-            step2: "Performance Obligations: (1) Installation - one-time service, (2) License - point in time, (3) Support - over time",
+            step1: "Contract Identification: Software license + post-contract support agreement",
+            step2: "Performance Obligations: (1) Software License - point in time, (2) PCS - over time",
             step3: "Transaction Price: Total contract amount",
-            step4: "SSP Allocation: Based on relative standalone selling prices of each obligation",
-            step5: "Recognition: Installation & License in Year 1, Support ratably over contract term"
+            step4: "SSP Allocation: Based on relative standalone selling prices (license + multi-year PCS)",
+            step5: "Recognition: License at point in time, PCS ratably over contract term"
         };
     }
     
-    static validateSSPAllocation(installationSSP, licenseSSP, supportSSP) {
-        const total = installationSSP + licenseSSP + supportSSP;
-        const installationPercent = (installationSSP / total) * 100;
-        const licensePercent = (licenseSSP / total) * 100;
-        const supportPercent = (supportSSP / total) * 100;
+    static validateSSPMethod(licenseSSP, pcsAnnualSSP, contractTerm, contractPrice) {
+        const totalPcsSSP = pcsAnnualSSP * contractTerm;
+        const totalSSP = licenseSSP + totalPcsSSP;
+        const licensePercent = (licenseSSP / totalSSP) * 100;
+        const pcsPercent = (totalPcsSSP / totalSSP) * 100;
         
-        // Check if it matches the common pattern from the example
+        // Check if it matches the common ASC 606 example pattern
         const isExamplePattern = (
-            Math.abs(installationPercent - 14.29) < 0.1 &&
-            Math.abs(licensePercent - 57.14) < 0.1 &&
-            Math.abs(supportPercent - 28.57) < 0.1
+            licenseSSP === 8000 &&
+            pcsAnnualSSP === 1000 &&
+            contractTerm === 5 &&
+            contractPrice === 12000
         );
         
         return {
-            isValid: total > 0,
+            isValid: totalSSP > 0,
             matchesExample: isExamplePattern,
+            allocation: {
+                licenseAmount: (licenseSSP / totalSSP) * contractPrice,
+                pcsAmount: (totalPcsSSP / totalSSP) * contractPrice
+            },
             percentages: {
-                installation: installationPercent,
                 license: licensePercent,
-                support: supportPercent
+                pcs: pcsPercent
             }
         };
     }
@@ -266,15 +267,15 @@ class ASC606ThreeObligationHelper {
 
 // Initialize calculator when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new MultiObligationRevenueCalculator();
+    new LicensePCSRevenueCalculator();
     
-    // Add helpful tooltips or validation messages
-    const sspInputs = ['installationSSP', 'licenseSSP', 'supportSSP'];
+    // Add helpful validation
+    const sspInputs = ['licenseSSP', 'pcsAnnualSSP'];
     sspInputs.forEach(inputId => {
         const input = document.getElementById(inputId);
         input.addEventListener('blur', () => {
-            const calculator = new MultiObligationRevenueCalculator();
-            // Additional validation could be added here
+            // Additional SSP validation could be added here
+            console.log(`SSP updated: ${inputId}`);
         });
     });
 });
