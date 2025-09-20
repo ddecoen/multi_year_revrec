@@ -58,27 +58,23 @@ class TermBasedSoftwareRevenueCalculator {
     
     handleLicenseTypeChange() {
         const selectedType = document.querySelector('input[name="licenseType"]:checked').value;
-        const isTermBased = selectedType === 'term';
         
-        // Update UI text based on license type
+        // Both term-based (electronic delivery) and perpetual licenses are point-in-time
         document.getElementById('licenseRecognitionTiming').textContent = 
-            isTermBased 
-                ? 'Recognition: Over Time (ratably over contract term)'
-                : 'Recognition: Point in Time (when license is transferred)';
+            selectedType === 'term'
+                ? 'Recognition: Point in Time (when electronically delivered)'
+                : 'Recognition: Point in Time (when license transferred)';
                 
-        document.getElementById('licenseSummaryTiming').textContent = 
-            isTermBased 
-                ? 'Recognized Over Time'
-                : 'Recognized at Point in Time';
+        document.getElementById('licenseSummaryTiming').textContent = 'Recognized at Point in Time';
                 
         document.getElementById('complianceLicenseRecognition').textContent = 
-            isTermBased 
-                ? 'License: Over time (customer benefits throughout term)'
+            selectedType === 'term'
+                ? 'License: Point in time (customer gains control when electronically delivered)'
                 : 'License: Point in time (when transferred and customer can benefit)';
                 
         // Update card styling
         const licenseCard = document.querySelector('.license-card');
-        if (isTermBased) {
+        if (selectedType === 'term') {
             licenseCard.classList.remove('perpetual-license');
             licenseCard.classList.add('term-license');
         } else {
@@ -201,13 +197,10 @@ class TermBasedSoftwareRevenueCalculator {
         for (let year = 1; year <= contractTerm; year++) {
             let yearLicenseRevenue = 0;
             
-            if (licenseType === 'term') {
-                // Term-based license: recognize ratably over contract term
-                yearLicenseRevenue = licenseAmount / contractTerm;
-            } else {
-                // Perpetual license: recognize at point in time (Year 1 only)
-                yearLicenseRevenue = year === 1 ? licenseAmount : 0;
-            }
+            // Both term-based and perpetual licenses delivered electronically 
+            // are recognized at point in time (Year 1 only)
+            // Customer gains control when software is electronically delivered
+            yearLicenseRevenue = year === 1 ? licenseAmount : 0;
             
             const yearSupportRevenue = annualSupportRevenue;
             const totalYearRevenue = yearLicenseRevenue + yearSupportRevenue;
@@ -230,14 +223,7 @@ class TermBasedSoftwareRevenueCalculator {
         document.getElementById('finalLicenseAmount').textContent = this.formatCurrency(licenseAmount);
         document.getElementById('finalSupportAmount').textContent = this.formatCurrency(supportAmount);
         
-        // Update license breakdown (only show if term-based)
-        if (licenseType === 'term') {
-            document.getElementById('licenseTotal').textContent = this.formatCurrency(licenseAmount);
-            document.getElementById('licenseAnnual').textContent = this.formatCurrency(licenseAmount / contractTerm);
-            document.getElementById('licenseMonthly').textContent = this.formatCurrency(licenseAmount / (contractTerm * 12));
-        }
-        
-        // Update support breakdown
+        // Update support breakdown (both license types have support over time)
         document.getElementById('supportTotal').textContent = this.formatCurrency(supportAmount);
         document.getElementById('supportAnnual').textContent = this.formatCurrency(supportAmount / contractTerm);
         document.getElementById('supportMonthly').textContent = this.formatCurrency(supportAmount / (contractTerm * 12));

@@ -2,55 +2,48 @@
 
 ## Overview
 
-This calculator handles **term-based software licenses** (like Coder) versus traditional **perpetual software licenses**, with proper ASC 606 revenue recognition methodology.
+This calculator handles **electronically delivered term-based software licenses** (like Coder) with proper ASC 606 revenue recognition methodology.
 
-### Key Distinction for Coder's Business Model
+### Key Insight: Electronic Delivery = Point-in-Time Recognition
 
-**Coder sells term-based on-premises software** - this is fundamentally different from perpetual licenses and affects revenue recognition timing:
+**For Coder's Term-Based Software with Electronic Delivery:**
 
-- **Term-Based License**: Customer has right to use software for contract term only
-- **Revenue Recognition**: Both license and support recognized over time (ratably)
-- **Business Rationale**: Customer benefits from software throughout the contract term
+Even though the license is **term-based** (expires after contract term), the **electronic delivery** method means:
 
-## Term-Based vs Perpetual License Comparison
+- ✅ **Customer gains control** when software is electronically delivered
+- ✅ **Customer can benefit** from the software immediately
+- ✅ **Customer accepts** the software (download/installation)
+- ✅ **Coder has right to payment** for delivered license
+- ✅ **No alternative use** to Coder once delivered
 
-### Term-Based Software (Like Coder)
+**Result: License revenue recognized at point in time (upfront), Support over time**
 
-**Characteristics:**
-- Customer licensed to use software for specific contract term (1-3 years typically)
-- Software expires at end of term unless renewed
-- Customer benefits throughout the contract period
-- Both license and support are ongoing services
+## Electronic Delivery vs Physical Delivery
 
-**ASC 606 Treatment:**
-- **Performance Obligations**: (1) Term License - over time, (2) Support - over time
-- **Revenue Recognition**: Both recognized ratably over contract term
-- **Pattern**: Even revenue recognition each year
-- **Rationale**: Customer simultaneously receives and consumes benefits
-
-### Perpetual Software (Traditional)
-
-**Characteristics:**
-- Customer receives indefinite right to use software
-- License doesn't expire (though support might)
+### Electronic Delivery (Coder's Model)
+**ASC 606 Analysis:**
+- Customer downloads/installs software immediately
 - Customer gains control at point of delivery
-- License and support are distinct obligations
+- **License Recognition**: Point in time (Year 1)
+- **Support Recognition**: Over time (ratably)
+- **Pattern**: Front-loaded license, ratable support
 
-**ASC 606 Treatment:**
-- **Performance Obligations**: (1) Perpetual License - point in time, (2) Support - over time
-- **Revenue Recognition**: License immediately, support over time
-- **Pattern**: Front-loaded revenue in Year 1
-- **Rationale**: Customer controls the license asset immediately
+### Physical Delivery or Implementation Services
+**ASC 606 Analysis:**
+- Customer may not gain control until implementation complete
+- May require over-time recognition if implementation is substantial
+- Different pattern depending on delivery complexity
 
-## Example Scenarios
+## Example: Coder's Electronic Delivery Model
 
-### Example 1: Coder Term-Based License (Default)
+### Default Contract Example
 
 **Contract Details:**
 - Annual License SSP: $2,000
 - Annual Support SSP: $1,000
 - Contract Term: 3 years
 - Contract Price: $12,000
+- **Delivery**: Electronic (immediate download/access)
 
 **SSP Calculation:**
 - License SSP: $2,000 × 3 = $6,000
@@ -61,24 +54,7 @@ This calculator handles **term-based software licenses** (like Coder) versus tra
 - License: ($6,000 ÷ $9,000) × $12,000 = **$8,000** (66.67%)
 - Support: ($3,000 ÷ $9,000) × $12,000 = **$4,000** (33.33%)
 
-**Revenue Recognition (Term-Based):**
-
-| Year | License | Support | Total | Cumulative |
-|------|---------|---------|-------|------------|
-| 1 | $2,667 | $1,333 | $4,000 | $4,000 |
-| 2 | $2,667 | $1,333 | $4,000 | $8,000 |
-| 3 | $2,666 | $1,334 | $4,000 | $12,000 |
-
-**Monthly Recognition:**
-- License: $222/month
-- Support: $111/month
-- **Total: $333/month**
-
-### Example 2: Same Contract, Perpetual License
-
-**Same SSP and Allocation as above, but different recognition pattern:**
-
-**Revenue Recognition (Perpetual):**
+**Revenue Recognition Schedule:**
 
 | Year | License | Support | Total | Cumulative |
 |------|---------|---------|-------|------------|
@@ -86,7 +62,12 @@ This calculator handles **term-based software licenses** (like Coder) versus tra
 | 2 | $0 | $1,333 | $1,333 | $10,666 |
 | 3 | $0 | $1,334 | $1,334 | $12,000 |
 
-### Example 3: Enterprise Term-Based Contract
+**Key Metrics:**
+- **Year 1 Revenue**: $9,333 (77.8% of contract)
+- **Monthly Support**: $111/month
+- **Recognition Pattern**: Front-loaded due to license upfront
+
+### Large Enterprise Contract
 
 **Contract Details:**
 - Annual License SSP: $5,000
@@ -103,134 +84,144 @@ This calculator handles **term-based software licenses** (like Coder) versus tra
 - License: ($10,000 ÷ $14,000) × $13,000 = **$9,286** (71.43%)
 - Support: ($4,000 ÷ $14,000) × $13,000 = **$3,714** (28.57%)
 
-**Revenue Recognition (Term-Based):**
+**Revenue Recognition Schedule:**
 
 | Year | License | Support | Total | Cumulative |
 |------|---------|---------|-------|------------|
-| 1 | $4,643 | $1,857 | $6,500 | $6,500 |
-| 2 | $4,643 | $1,857 | $6,500 | $13,000 |
+| 1 | $9,286 | $1,857 | $11,143 | $11,143 |
+| 2 | $0 | $1,857 | $1,857 | $13,000 |
 
-## ASC 606 Compliance for Term-Based Licenses
+## ASC 606 Analysis for Electronic Delivery
 
 ### Step 1: Identify the Contract
 - Term-based software license + support agreement
+- Electronic delivery mechanism
 - Fixed term with clear start/end dates
 - Enforceable rights and obligations
-- Commercial substance and probable collection
 
 ### Step 2: Identify Performance Obligations
 
-**Term-Based License Analysis:**
-- ✅ **Distinct**: Customer can benefit from license independently
-- ✅ **Separable**: License is separately identifiable from support
-- ✅ **Over Time**: Customer benefits throughout the term
-- ❌ **Not Point in Time**: Customer doesn't gain perpetual control
+**Two Distinct Performance Obligations:**
 
-**Support Services Analysis:**
-- ✅ **Distinct**: Customer benefits from support independently
-- ✅ **Over Time**: Customer receives and consumes benefits as provided
-- ✅ **Stand-Ready**: Ongoing obligation throughout term
+1. **Term-Based Software License**
+   - Customer can benefit from license independently
+   - License is distinct from support services
+   - **Delivery Method**: Electronic (immediate access)
+   - **Control Transfer**: Point in time
+
+2. **Support Services**
+   - Ongoing technical support throughout term
+   - Stand-ready obligation
+   - **Delivery Method**: Ongoing services
+   - **Control Transfer**: Over time
 
 ### Step 3: Determine Transaction Price
-- Fixed contract amount (no variable consideration in basic case)
-- Consider payment terms and financing components
-- Evaluate for material rights or options
+- Fixed contract amount
+- No significant financing component (typical terms)
+- No variable consideration in basic scenarios
 
 ### Step 4: Allocate Transaction Price
-- Use relative SSP method
-- Annual SSPs × contract term = total SSPs
-- Allocate proportionally based on relative SSPs
+- **Method**: Relative standalone selling prices
+- **License SSP**: Annual rate × contract term
+- **Support SSP**: Annual rate × contract term
+- **Allocation**: Proportional to relative SSPs
 
 ### Step 5: Recognize Revenue
 
-**Term-Based License (Over Time Recognition):**
-- Customer simultaneously receives and consumes benefits
-- No alternative use to vendor (customer-specific rights)
-- Enforceable right to payment for performance to date
-- **Recognition Pattern**: Straight-line over contract term
+**Software License (Point in Time):**
+- ✅ **Control Transfer**: Customer gains control when electronically delivered
+- ✅ **Physical Possession**: Customer downloads/installs software
+- ✅ **Legal Title**: Customer has contractual right to use
+- ✅ **Risks and Rewards**: Customer bears risks of software use
+- ✅ **Acceptance**: Customer can immediately benefit from software
 
-**Support Services (Over Time Recognition):**
-- Stand-ready performance obligation
-- Customer receives benefits as services are provided
-- **Recognition Pattern**: Straight-line over contract term
+**Support Services (Over Time):**
+- ✅ **Simultaneous Receipt**: Customer receives benefits as services provided
+- ✅ **No Alternative Use**: Support is customer-specific
+- ✅ **Right to Payment**: Enforceable right for services performed
 
-## Impact on Financial Statements
+## Comparison with Other Software Models
 
-### Term-Based Model (Coder's Approach)
-**Benefits:**
-- Smoother, more predictable revenue recognition
-- Better matches revenue with service delivery period
-- Aligns with subscription-style business models
-- Reduces revenue volatility
+### SaaS/Cloud Software
+- **Delivery**: Customer accesses vendor's servers
+- **Control**: Customer doesn't control the software
+- **Recognition**: Over time (subscription model)
+- **Pattern**: Ratable throughout contract
 
-**Considerations:**
-- Lower initial revenue recognition vs perpetual
-- Requires careful contract term tracking
-- May impact revenue growth metrics
+### Traditional Perpetual + Support
+- **Delivery**: Perpetual license + ongoing support
+- **Control**: Customer controls license indefinitely
+- **Recognition**: License point in time, support over time
+- **Pattern**: Similar to Coder's model
 
-### Perpetual Model (Traditional)
-**Benefits:**
-- Higher upfront revenue recognition
-- Immediate value recognition for delivered licenses
-- Traditional software industry pattern
+### Coder's Term-Based + Electronic Delivery
+- **Delivery**: Term license electronically delivered + support
+- **Control**: Customer controls software during term
+- **Recognition**: License point in time, support over time
+- **Pattern**: Front-loaded license, ratable support
 
-**Considerations:**
-- More volatile revenue patterns
-- Front-loads revenue recognition
-- May not reflect ongoing value delivery
+## Business Impact Analysis
 
-## Industry Context
+### Financial Statement Impact
 
-### Software-as-a-Service (SaaS)
-- Typically recognized over time (subscription model)
-- Customer accesses but doesn't control software
-- Similar pattern to term-based licenses
+**Revenue Recognition Pattern:**
+- **Year 1**: High revenue due to upfront license recognition
+- **Subsequent Years**: Lower, consistent support revenue
+- **Cash Flow**: Typically collected upfront or per payment terms
+- **Deferred Revenue**: Primarily support obligations
 
-### Traditional On-Premises Software
-- Historically perpetual licenses (point in time)
-- Support/maintenance recognized over time
-- Front-loaded revenue recognition
+**Metrics Impact:**
+- **Annual Recurring Revenue (ARR)**: Includes ratable support portion
+- **Revenue Growth**: May show volatility based on license timing
+- **Gross Margins**: Typically higher on license, lower on support
 
-### Modern On-Premises (Like Coder)
-- Term-based licensing becoming more common
-- Better aligns with customer value realization
-- Provides more predictable revenue streams
+### Operational Considerations
 
-## Best Practices for Term-Based Software
+**Contract Management:**
+- Track license delivery dates for recognition timing
+- Monitor support obligations throughout contract term
+- Manage renewal cycles and pricing
 
-### Contract Documentation
-1. **Clear Term Definition**: Specify exact start/end dates
-2. **Usage Rights**: Define scope of license during term
-3. **Support Obligations**: Detail included support services
-4. **Renewal Terms**: Clarify renewal vs. new contract treatment
+**Systems Requirements:**
+- Automated license delivery tracking
+- Support obligation monitoring
+- Revenue recognition automation
+
+## Industry Best Practices
 
 ### SSP Determination
-1. **Market Analysis**: Research competitive term-based pricing
-2. **Historical Data**: Use actual renewal rates and pricing
-3. **Component Pricing**: Separate license from support pricing
+1. **Observable Prices**: Use actual standalone sales when available
+2. **Market Assessment**: Research competitive pricing
+3. **Cost Plus Margin**: Calculate based on delivery costs + margin
 4. **Regular Updates**: Refresh SSP analysis annually
 
-### Revenue Recognition Process
-1. **Monthly Recognition**: Calculate monthly amounts for smooth reporting
-2. **Term Tracking**: Monitor contract start/end dates carefully
-3. **Modification Handling**: Process contract changes appropriately
-4. **System Integration**: Automate calculations where possible
+### Documentation Requirements
+1. **Delivery Evidence**: Log electronic delivery timestamps
+2. **Customer Acceptance**: Document customer access/installation
+3. **Support Obligations**: Define included support services
+4. **Contract Terms**: Clear start/end dates and renewal terms
+
+### Audit Considerations
+1. **Control Transfer**: Document when customer gains control
+2. **SSP Support**: Maintain evidence for pricing methodology
+3. **System Controls**: Automated recognition where possible
+4. **Manual Overrides**: Document and approve exceptions
 
 ## Technical Implementation
 
 ### Calculator Features
-- **License Type Toggle**: Switch between term-based and perpetual
-- **Real-Time SSP**: Dynamic calculation of total SSPs
-- **Visual Formulas**: See exact allocation methodology
-- **Comparative Analysis**: Side-by-side term vs perpetual examples
-- **Monthly Breakdowns**: Support financial planning needs
+- **Electronic Delivery Focus**: Optimized for point-in-time license recognition
+- **Real-Time SSP**: Dynamic calculation based on annual rates and terms
+- **Visual Allocation**: See exact ASC 606 methodology
+- **Coder-Specific Defaults**: Pre-loaded with typical contract values
+- **Professional Reporting**: Generate schedules for financial planning
 
-### Integration Options
+### Integration Capabilities
 - Standalone web application
-- API for system integration
-- Export capabilities for financial systems
-- Audit trail documentation
+- API endpoints for system integration
+- CSV/Excel export functionality
+- Audit trail maintenance
 
 ---
 
-**For Coder Teams:** This calculator is specifically designed to handle term-based software licensing scenarios. The default settings reflect typical Coder contract structures, but all parameters are adjustable for different deal sizes and terms.
+**For Coder Teams:** This calculator reflects the correct ASC 606 treatment for electronically delivered term-based software. The key insight is that electronic delivery enables immediate control transfer, making license revenue recognizable at point in time regardless of the term-based nature of the license.
