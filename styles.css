@@ -1,0 +1,275 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 2.2em;
+}
+
+header p {
+    color: #7f8c8d;
+    font-size: 1.1em;
+}
+
+main {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+section {
+    margin-bottom: 30px;
+}
+
+h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #3498db;
+}
+
+h3 {
+    color: #34495e;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="number"]:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.method-selection {
+    margin-bottom: 15px;
+    border: 2px solid #ecf0f1;
+    border-radius: 6px;
+    padding: 15px;
+    transition: border-color 0.3s ease;
+}
+
+.method-selection:hover {
+    border-color: #bdc3c7;
+}
+
+.method-selection input[type="radio"] {
+    margin-right: 10px;
+}
+
+.method-selection label {
+    display: block;
+    cursor: pointer;
+    margin-bottom: 0;
+}
+
+.method-selection label strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #2c3e50;
+}
+
+.method-selection label span {
+    color: #7f8c8d;
+    font-size: 0.9em;
+}
+
+.method-selection input[type="radio"]:checked + label {
+    color: #3498db;
+}
+
+.year-input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 15px;
+}
+
+.year-input label {
+    min-width: 80px;
+    margin-bottom: 0;
+}
+
+.year-input input {
+    flex: 1;
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"] {
+    background-color: #3498db;
+    color: white;
+    flex: 1;
+}
+
+button[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+button[type="reset"] {
+    background-color: #95a5a6;
+    color: white;
+    flex: 0.3;
+}
+
+button[type="reset"]:hover {
+    background-color: #7f8c8d;
+}
+
+.results {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.summary-item {
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+    border-left: 4px solid #3498db;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.summary-item span:first-child {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.summary-item span:last-child {
+    font-weight: 700;
+    color: #27ae60;
+    font-size: 1.1em;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+th {
+    background-color: #3498db;
+    color: white;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+tr:hover {
+    background-color: #e3f2fd;
+}
+
+.currency {
+    text-align: right;
+    font-weight: 600;
+    color: #27ae60;
+}
+
+.percentage {
+    text-align: center;
+    font-weight: 600;
+    color: #3498db;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .summary {
+        grid-template-columns: 1fr;
+    }
+    
+    table {
+        font-size: 14px;
+    }
+    
+    th, td {
+        padding: 8px;
+    }
+}

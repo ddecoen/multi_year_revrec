@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASC 606 Multi-Year Revenue Recognition Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ASC 606 Multi-Year Revenue Recognition Calculator</h1>
+            <p>Allocate transaction price over multiple year agreements for performance obligations</p>
+        </header>
+
+        <main>
+            <form id="revenueForm">
+                <section class="contract-info">
+                    <h2>Contract Information</h2>
+                    <div class="form-group">
+                        <label for="totalTransactionPrice">Total Transaction Price ($)</label>
+                        <input type="number" id="totalTransactionPrice" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contractTerm">Contract Term (Years)</label>
+                        <input type="number" id="contractTerm" min="1" max="10" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="day1Delivery">Day 1 Delivery Amount ($)</label>
+                        <input type="number" id="day1Delivery" step="0.01" min="0">
+                    </div>
+                </section>
+
+                <section class="recognition-method">
+                    <h2>Revenue Recognition Method</h2>
+                    <div class="method-selection">
+                        <input type="radio" id="outputMethod" name="recognitionMethod" value="output" checked>
+                        <label for="outputMethod">
+                            <strong>Output Method</strong>
+                            <span>Measure progress based on direct measurements of value transferred</span>
+                        </label>
+                    </div>
+                    <div class="method-selection">
+                        <input type="radio" id="inputMethod" name="recognitionMethod" value="input">
+                        <label for="inputMethod">
+                            <strong>Input Method</strong>
+                            <span>Measure progress based on entity's efforts or inputs</span>
+                        </label>
+                    </div>
+                </section>
+
+                <section class="output-method-inputs" id="outputInputs">
+                    <h3>Output Method Details</h3>
+                    <div class="form-group">
+                        <label for="totalUnits">Total Units to be Delivered</label>
+                        <input type="number" id="totalUnits" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="unitsDelivered">Units Delivered per Year</label>
+                        <div id="unitsPerYear"></div>
+                    </div>
+                </section>
+
+                <section class="input-method-inputs" id="inputInputs" style="display: none;">
+                    <h3>Input Method Details</h3>
+                    <div class="form-group">
+                        <label for="totalCosts">Total Expected Costs ($)</label>
+                        <input type="number" id="totalCosts" step="0.01" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="costsIncurred">Costs Incurred per Year</label>
+                        <div id="costsPerYear"></div>
+                    </div>
+                </section>
+
+                <div class="form-actions">
+                    <button type="submit">Calculate Revenue Recognition</button>
+                    <button type="reset">Reset</button>
+                </div>
+            </form>
+
+            <section class="results" id="results" style="display: none;">
+                <h2>Revenue Recognition Schedule</h2>
+                <div class="summary">
+                    <div class="summary-item">
+                        <span>Day 1 Recognition:</span>
+                        <span id="day1Amount">$0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Remaining Amount:</span>
+                        <span id="remainingAmount">$0.00</span>
+                    </div>
+                </div>
+                <table id="scheduleTable">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Progress %</th>
+                            <th>Revenue Amount</th>
+                            <th>Cumulative Revenue</th>
+                        </tr>
+                    </thead>
+                    <tbody id="scheduleBody">
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
