@@ -1,168 +1,251 @@
-# ASC 606 License + Support Revenue Recognition Calculator - Demo Examples
+# ASC 606 Multi-Obligation Revenue Recognition Calculator - Demo Examples
 
 ## Overview
 
-This calculator handles the specific scenario where:
-- A software company sells a license + support bundle
-- Total invoice amount is allocated between license (typically 85%) and support (typically 15%)
-- License revenue is recognized at point in time (Day 1)
-- Support revenue is recognized ratably over the contract term
+This calculator handles complex ASC 606 scenarios with three distinct performance obligations:
+1. **Initial Software Installation** (14.29%) - One-time service recognized in Year 1
+2. **Software License** (57.14%) - Point in time recognition in Year 1  
+3. **Technical Support** (28.57%) - Over time recognition across contract term
 
-## ASC 606 Compliance Framework
+The allocation percentages are based on relative standalone selling prices (SSP) as required by ASC 606.
+
+## ASC 606 Five-Step Framework Implementation
 
 ### Step 1: Identify the Contract
-- Software license + support services contract with defined terms
-- Clear payment terms and deliverables
+- Software implementation and support agreement
+- Clear deliverables and payment terms
+- Enforceable rights and obligations
 
 ### Step 2: Identify Performance Obligations
-1. **Software License**: Distinct performance obligation satisfied at point in time
-2. **Support Services**: Distinct performance obligation satisfied over time
+
+**Three Distinct Performance Obligations:**
+
+1. **Initial Software Installation**
+   - One-time implementation service
+   - Satisfied at point in time (when installation complete)
+   - Customer simultaneously receives and consumes benefits
+
+2. **Software License**  
+   - Right to use software for contract term
+   - Satisfied at point in time (when access granted)
+   - Customer controls the license
+
+3. **Technical Support Services**
+   - Ongoing support throughout contract term
+   - Satisfied over time (as services provided)
+   - Customer simultaneously receives and consumes benefits
 
 ### Step 3: Determine Transaction Price
-- Total day 1 invoice amount
-- Allocated based on standalone selling prices (SSP)
+- Total contract amount
+- Fixed consideration (no variable components in this example)
 
 ### Step 4: Allocate Transaction Price
-- License: Based on SSP (commonly 85% of total)
-- Support: Based on SSP (commonly 15% of total)
+
+**Based on Relative Standalone Selling Prices:**
+
+- Installation SSP: $150,000
+- License SSP: $600,000  
+- Support SSP: $300,000
+- **Total SSP: $1,050,000**
+
+**Allocation Percentages:**
+- Installation: $150,000 ÷ $1,050,000 = **14.29%**
+- License: $600,000 ÷ $1,050,000 = **57.14%**
+- Support: $300,000 ÷ $1,050,000 = **28.57%**
 
 ### Step 5: Recognize Revenue
-- License: When customer gains control (Day 1)
-- Support: Ratably as services are provided over contract term
+- **Installation & License:** Recognized in Year 1 (point in time)
+- **Support:** Recognized ratably over contract term (over time)
 
-## Example 1: Standard Software License + Support (3-Year Term)
+## Example 1: Standard Implementation Contract
 
-**Scenario:** Enterprise software company sells 3-year license + support bundle
-
-**Inputs:**
-- Total Day 1 Invoice: $300,000
+**Contract Details:**
+- Total Contract Price: $1,000,000
 - Contract Term: 3 years
-- License Allocation: 85%
-- Support Allocation: 15%
+- SSP Values: Installation $150K, License $600K, Support $300K
 
-**ASC 606 Calculation:**
-- License Amount: $300,000 × 85% = $255,000
-- Support Amount: $300,000 × 15% = $45,000
-
-**Revenue Recognition Schedule:**
-- **Year 1:** $255,000 (license) + $15,000 (support) = $270,000
-- **Year 2:** $0 (license) + $15,000 (support) = $15,000
-- **Year 3:** $0 (license) + $15,000 (support) = $15,000
-- **Monthly Support Recognition:** $1,250/month
-
-## Example 2: Large Enterprise Deal (5-Year Term)
-
-**Scenario:** Major enterprise deployment with extended support
-
-**Inputs:**
-- Total Day 1 Invoice: $1,000,000
-- Contract Term: 5 years
-- License Allocation: 85%
-- Support Allocation: 15%
-
-**ASC 606 Calculation:**
-- License Amount: $1,000,000 × 85% = $850,000
-- Support Amount: $1,000,000 × 15% = $150,000
+**Revenue Allocation:**
+- Installation: $1,000,000 × 14.29% = $142,900
+- License: $1,000,000 × 57.14% = $571,400  
+- Support: $1,000,000 × 28.57% = $285,700
 
 **Revenue Recognition Schedule:**
-- **Year 1:** $850,000 (license) + $30,000 (support) = $880,000
-- **Years 2-5:** $0 (license) + $30,000 (support) = $30,000 each year
-- **Monthly Support Recognition:** $2,500/month
 
-## Example 3: Custom SSP Allocation
+| Year | Installation | License | Support | Total | Cumulative |
+|------|-------------|---------|---------|-------|------------|
+| 1 | $142,900 | $571,400 | $95,233 | $809,533 | $809,533 |
+| 2 | $0 | $0 | $95,233 | $95,233 | $904,766 |
+| 3 | $0 | $0 | $95,234 | $95,234 | $1,000,000 |
 
-**Scenario:** Company with different SSP analysis results
+**Support Breakdown:**
+- Annual: $95,233
+- Monthly: $7,936
 
-**Inputs:**
-- Total Day 1 Invoice: $500,000
-- Contract Term: 2 years
-- License Allocation: 80% (based on company's SSP analysis)
-- Support Allocation: 20% (based on company's SSP analysis)
+## Example 2: Large Enterprise Deal
 
-**ASC 606 Calculation:**
-- License Amount: $500,000 × 80% = $400,000
-- Support Amount: $500,000 × 20% = $100,000
+**Contract Details:**
+- Total Contract Price: $2,100,000 (2x the SSP total)
+- Contract Term: 3 years
+- Same SSP ratios apply
+
+**Revenue Allocation:**
+- Installation: $2,100,000 × 14.29% = $300,090
+- License: $2,100,000 × 57.14% = $1,199,940
+- Support: $2,100,000 × 28.57% = $599,970
 
 **Revenue Recognition Schedule:**
-- **Year 1:** $400,000 (license) + $50,000 (support) = $450,000
-- **Year 2:** $0 (license) + $50,000 (support) = $50,000
-- **Monthly Support Recognition:** $4,167/month
+
+| Year | Installation | License | Support | Total | Cumulative |
+|------|-------------|---------|---------|-------|------------|
+| 1 | $300,090 | $1,199,940 | $199,990 | $1,700,020 | $1,700,020 |
+| 2 | $0 | $0 | $199,990 | $199,990 | $1,900,010 |
+| 3 | $0 | $0 | $199,990 | $199,990 | $2,100,000 |
+
+## Example 3: Five-Year Extended Support
+
+**Contract Details:**
+- Total Contract Price: $1,500,000
+- Contract Term: 5 years (extended support)
+- Same SSP allocation percentages
+
+**Revenue Allocation:**
+- Installation: $1,500,000 × 14.29% = $214,350
+- License: $1,500,000 × 57.14% = $857,100
+- Support: $1,500,000 × 28.57% = $428,550
+
+**Revenue Recognition Schedule:**
+
+| Year | Installation | License | Support | Total | Cumulative |
+|------|-------------|---------|---------|-------|------------|
+| 1 | $214,350 | $857,100 | $85,710 | $1,157,160 | $1,157,160 |
+| 2-5 | $0 | $0 | $85,710 | $85,710 | +$85,710/year |
+
+## SSP Determination Methods
+
+### Observable SSP (Preferred)
+- **Direct Observable:** Company sells installation, license, and support separately
+- **Historical Data:** Past transactions for similar services
+- **Published Rates:** Documented pricing for individual components
+
+### Estimated SSP (When Not Observable)
+
+**1. Adjusted Market Assessment**
+- Competitor analysis for similar services
+- Market rates for implementation services
+- Industry benchmarks for support pricing
+
+**2. Expected Cost Plus Margin**
+- Installation: Direct costs + target margin
+- Support: Annual service costs + profit margin
+- License: Development costs allocation + margin
+
+**3. Residual Approach**
+- Use only when SSP is highly variable or uncertain
+- Typically applied to license component
+- Total contract price minus other observable SSPs
 
 ## Key ASC 606 Considerations
 
-### Standalone Selling Price (SSP) Determination
+### Performance Obligation Identification
 
-**Observable SSP:**
-- Use actual prices when license and support are sold separately
-- Historical pricing data for similar arrangements
+**Installation Service:**
+- ✅ Distinct service (specialized implementation)
+- ✅ Customer benefits from service on its own
+- ✅ Separable from other obligations
 
-**Estimated SSP (when not directly observable):**
-- **Adjusted market assessment:** Competitor pricing analysis
-- **Expected cost plus margin:** Cost-based pricing with appropriate margin
-- **Residual approach:** Only when SSP is highly variable or uncertain
+**Software License:**
+- ✅ Distinct right (functional software)
+- ✅ Customer controls the license
+- ✅ Right to use vs. right to access analysis
 
-### License vs. Support Characteristics
+**Support Services:**
+- ✅ Distinct service (ongoing technical support)
+- ✅ Stand-ready obligation
+- ✅ Series of distinct services (daily support)
 
-**Software License (Point in Time Recognition):**
-- ✅ Customer has legal title to the software
-- ✅ Customer has physical possession (download/installation)
-- ✅ Customer accepts the software
-- ✅ Customer bears risks and rewards of ownership
-- ✅ Entity has right to payment
+### Revenue Recognition Timing
 
-**Support Services (Over Time Recognition):**
-- ✅ Customer simultaneously receives and consumes benefits
-- ✅ Entity's performance creates/enhances asset customer controls
-- ✅ Entity has right to payment for performance completed to date
+**Point in Time (Installation & License):**
+- Customer gains control of the asset/service
+- Risks and rewards transfer to customer
+- Customer accepts the deliverable
+- Entity has right to payment
 
-### Common Allocation Percentages by Industry
+**Over Time (Support):**
+- Customer simultaneously receives and consumes benefits
+- Entity's performance creates no alternative use asset
+- Enforceable right to payment for performance to date
 
-**Enterprise Software:**
-- License: 80-90%
-- Support: 10-20%
+## Calculator Features
 
-**SaaS/Cloud Solutions:**
-- Hosting/Platform: 70-85%
-- Support/Professional Services: 15-30%
+### Real-Time SSP Analysis
+- Input individual SSP amounts
+- Automatic percentage calculation
+- Total SSP validation
+- Allocation amount updates
 
-**On-Premise + Cloud Hybrid:**
-- License: 60-75%
+### Compliance Validation
+- ASC 606 five-step framework tracking
+- Performance obligation identification
+- Revenue recognition timing validation
+- Professional audit trail
+
+### Professional Reporting
+- Annual revenue schedule
+- Cumulative recognition tracking
+- Monthly support amounts
+- Compliance summary documentation
+
+## Industry Variations
+
+### Software Implementation
+- Installation: 10-20% (based on complexity)
+- License: 50-70% (core software value)
+- Support: 20-30% (ongoing services)
+
+### Hardware + Software
+- Hardware: 40-60%
+- Software: 25-35%
 - Support: 15-25%
-- Cloud Services: 10-20%
 
-## Validation and Testing
+### SaaS with Professional Services
+- Platform Access: 60-80%
+- Implementation: 10-25%
+- Support/Training: 10-20%
 
-### Calculator Features
+## Best Practices
 
-1. **Real-time Allocation Validation**: Ensures percentages total 100%
-2. **ASC 606 Step Compliance**: Validates each step of the revenue recognition process
-3. **Professional Display**: Shows detailed breakdown by performance obligation
-4. **Monthly/Annual Views**: Provides both perspectives for financial planning
+### Documentation Requirements
+1. **SSP Analysis:** Document methodology and supporting data
+2. **Performance Obligations:** Clearly identify distinct services
+3. **Recognition Timing:** Support point-in-time vs. over-time decisions
+4. **Contract Review:** Regular assessment of terms and obligations
 
-### Best Practices
-
-1. **Document SSP Analysis**: Maintain supporting documentation for allocation percentages
-2. **Regular Review**: Update SSP allocations based on current market data
-3. **Audit Preparation**: Ensure calculator outputs support financial statement assertions
-4. **Contract Review**: Validate that contracts clearly define performance obligations
+### Audit Considerations
+1. **SSP Supporting Evidence:** Market data, cost studies, management estimates
+2. **Revenue Recognition:** Proper timing and measurement documentation
+3. **System Controls:** Accurate calculation and recording processes
+4. **Disclosure Requirements:** Financial statement presentation and notes
 
 ## Technical Implementation
 
-### Browser Compatibility
+### Browser Support
 - Modern browsers with ES6+ support
-- Mobile-responsive design
-- No external dependencies
+- Responsive design for mobile access
+- No external dependencies required
 
-### Data Validation
-- Input sanitization and validation
-- Mathematical precision for financial calculations
-- Error handling and user feedback
-
-### Security
-- Client-side only (no data transmission)
-- No personal or financial data storage
+### Data Security
+- Client-side processing only
+- No data transmission or storage
 - HTTPS deployment recommended
+- Privacy-first architecture
+
+### Integration Options
+- Standalone web application
+- Embeddable iframe widget
+- API endpoints for system integration
+- Export capabilities (PDF, Excel)
 
 ---
 
-**Need Help?** This calculator implements ASC 606 revenue recognition standards for software license + support bundles. For complex scenarios or audit requirements, consult with qualified accounting professionals.
+**Need Help?** This calculator implements the full ASC 606 framework for complex multi-obligation software contracts. For specific SSP determination or audit requirements, consult with qualified accounting professionals.
