@@ -3,7 +3,7 @@
   "name": "asc606-revenue-calculator",
   "builds": [
     {
-      "src": "index.html",
+      "src": "**/*",
       "use": "@vercel/static"
     }
   ],
@@ -15,7 +15,7 @@
   ],
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/(.*\\.(css|js|html|png|jpg|jpeg|gif|svg|ico))",
       "headers": [
         {
           "key": "Cache-Control",
@@ -33,6 +33,5 @@
       ]
     }
   ],
-  "functions": {},
   "trailingSlash": false
 }
